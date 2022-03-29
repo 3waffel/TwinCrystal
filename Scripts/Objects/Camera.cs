@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public class Camera : Camera2D
 {
@@ -18,7 +18,8 @@ public class Camera : Camera2D
 
     public override void _Process(float delta)
     {
-        Position = Position.LinearInterpolate(_trackObject.Position, delta * _cameraSpeed);
+        Position =
+            Position
+                .LinearInterpolate(_trackObject.Position, delta * _cameraSpeed);
     }
-
 }
