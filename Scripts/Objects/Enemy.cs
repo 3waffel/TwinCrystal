@@ -42,6 +42,7 @@ public class Enemy : KinematicBody2D
         bullet.Target = target.GlobalPosition;
         bullet.Shooter = this;
         bullet.BulletTexture = bulletTexture;
+        bullet.Connect("BulletHit", this, nameof(OnBulletHit));
         GetParent().AddChild(bullet);
     }
 
@@ -59,5 +60,10 @@ public class Enemy : KinematicBody2D
         {
             target = null;
         }
+    }
+
+    public void OnBulletHit(Node2D bullet, Node2D target)
+    {
+        bullet.QueueFree();
     }
 }

@@ -12,7 +12,7 @@ public class GameEvents : Node
     public delegate void BulletHitTarget(Node2D target);
 
     [Signal]
-    public delegate void LevelChanged(String NextLevelName);
+    public delegate void LevelChanged(NodePath nextLevelPath);
 
     public override void _Ready()
     {

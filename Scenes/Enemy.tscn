@@ -22,7 +22,6 @@ texture = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( 32, -29.6, 32, 29, 29.6, 32, -29, 32, -32, 29.6, -32, -29.6, -29, -32, 29, -32 )
-disabled = true
 
 [node name="DetectionArea" type="Area2D" parent="."]
 

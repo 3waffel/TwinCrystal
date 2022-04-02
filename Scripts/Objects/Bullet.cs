@@ -3,6 +3,9 @@ using System;
 
 public class Bullet : Area2D
 {
+    [Signal]
+    public delegate void BulletHit(Node2D Bullet, Node2D Target);
+
     public Texture BulletTexture { get => GetNode<Sprite>("Sprite").Texture; set => GetNode<Sprite>("Sprite").Texture = value; }
 
     [Export]
@@ -55,11 +58,11 @@ public class Bullet : Area2D
         }
     }
 
-    public void OnBodyEntered(object body)
+    public void OnBodyEntered(Node2D target)
     {
-        if (body != Shooter)
+        if (target != Shooter)
         {
-            QueueFree();
+            EmitSignal(nameof(BulletHit), this, target);
         }
     }
 

@@ -8,11 +8,11 @@ public class Level : Node2D
 
     public override void _Ready()
     {
-
+        GameEvents gameEvents = GetNode<GameEvents>("/root/GameEvents");
     }
 
     public void ChangeLevel(String NextLevelName)
     {
-        EmitSignal("LevelChanged", NextLevelName);
+        GetNode<GameEvents>("/root/GameEvents").EmitSignal("LevelChanged", NextLevelName);
     }
 }

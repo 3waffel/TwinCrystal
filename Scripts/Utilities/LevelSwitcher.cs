@@ -8,9 +8,15 @@ public class LevelSwitcher : Node2D
 
     public Node2D _currentLevel;
 
+    private ViewportContainer _viewportContainer;
+
     public override void _Ready()
     {
-        _currentLevel.Connect("LevelChanged", this, nameof(OnLevelChanged));
+        _viewportContainer = GetNode<ViewportContainer>("ViewportContainer");
+        GetViewport().Connect("size_changed", this, nameof(OnViewportResized));
+
+        GetNode<GameEvents>("/root/GameEvents")
+            .Connect("LevelChanged", this, nameof(OnLevelChanged));
     }
 
     /// <summary>
@@ -21,8 +27,12 @@ public class LevelSwitcher : Node2D
     {
         var level = (PackedScene) ResourceLoader.Load(NextLevelName);
         var levelInstance = (Node2D) level.Instance();
-        AddChild(levelInstance);
-        levelInstance.Connect("LevelChanged", this, nameof(OnLevelChanged));
+        AddChild (levelInstance);
         _currentLevel.QueueFree();
+    }
+
+    public void OnViewportResized()
+    {
+        _viewportContainer.SetSize(GetViewport().Size);
     }
 }
