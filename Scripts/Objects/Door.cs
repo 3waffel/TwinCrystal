@@ -4,12 +4,7 @@ using Godot;
 public class Door : Interactable
 {
     [Export]
-    protected NodePath _nextLevelPath;
-
-    public override void _Ready()
-    {
-        
-    }
+    protected PackedScene _nextLevel;
 
     public override void _Process(float delta)
     {
@@ -19,8 +14,9 @@ public class Door : Interactable
             if (Input.IsActionJustPressed("interact"))
             {
                 GD.Print("Door: _Process");
-                GetNode<AnimationPlayer>("AnimationPlayer").Play("Open");
-                GetNode<GameEvents>("/root/GameEvents").EmitSignal("LevelChanged", _nextLevelPath);
+                // GetNode<AnimationPlayer>("AnimationPlayer").Play("Open");
+                GetNode<GameEvents>("/root/GameEvents")
+                    .EmitSignal("LevelChanged", _nextLevel);
             }
         }
     }

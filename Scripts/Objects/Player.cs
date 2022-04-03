@@ -4,7 +4,7 @@ using Godot;
 public class Player : KinematicBody2D
 {
     [Export]
-    private float moveSpeed = 200f;
+    private float moveSpeed = 400f;
 
     [Export]
     private float jumpSpeed = 700f;

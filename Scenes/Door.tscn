@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Objects/Door.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/Levels/SecondLevel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Textures/Icons/structure_gate.svg" type="Texture" id=3]
+
+[node name="Door" type="Area2D"]
+position = Vector2( 12184, 128 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+_interactionObjectPath = NodePath("../Player")
+_nextLevel = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.352941, 0.952941, 0.945098, 0.54902 )
+texture = ExtResource( 3 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 104, 64, -88, 64, -64, -64, 64, -64 )

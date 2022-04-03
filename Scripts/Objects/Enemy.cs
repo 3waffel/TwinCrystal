@@ -4,19 +4,19 @@ using Godot;
 public class Enemy : KinematicBody2D
 {
     [Export]
-    private float moveSpeed = 100f;
+    private float _moveSpeed = 100f;
 
     [Export]
     private PackedScene _bulletScene = null;
 
     [Export]
-    private Texture bulletTexture = null;
+    private Texture _bulletTexture = null;
 
     [Export]
-    private float bulletSpeed = 50f;
+    private float _bulletSpeed = 50f;
 
     [Export]
-    private Node2D target = null;
+    private Node2D _target = null;
 
     public override void _Ready()
     {
@@ -29,7 +29,7 @@ public class Enemy : KinematicBody2D
 
     public override void _Process(float delta)
     {
-        if (target != null)
+        if (_target != null)
         {
             Attack();
         }
@@ -39,9 +39,9 @@ public class Enemy : KinematicBody2D
     {
         var bullet = (Bullet) _bulletScene.Instance();
         bullet.Position = Position;
-        bullet.Target = target.GlobalPosition;
+        bullet.Target = _target.GlobalPosition;
         bullet.Shooter = this;
-        bullet.BulletTexture = bulletTexture;
+        bullet.BulletTexture = _bulletTexture;
         bullet.Connect("BulletHit", this, nameof(OnBulletHit));
         GetParent().AddChild(bullet);
     }
@@ -50,7 +50,7 @@ public class Enemy : KinematicBody2D
     {
         if (body is Player)
         {
-            target = (Node2D) body;
+            _target = (Node2D) body;
         }
     }
 
@@ -58,7 +58,7 @@ public class Enemy : KinematicBody2D
     {
         if (body is Player)
         {
-            target = null;
+            _target = null;
         }
     }
 

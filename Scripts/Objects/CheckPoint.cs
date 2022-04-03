@@ -3,6 +3,9 @@ using Godot;
 
 public class CheckPoint : Interactable
 {
+    [Export]
+    protected String _nextLevel;
+
     public override void _Ready()
     {
         base._Ready();
@@ -18,7 +21,9 @@ public class CheckPoint : Interactable
         }
     }
 
-    public void ReloadLevel()
+    public void TransportPlayerToCheckPoint()
     {
+        GetNode<GameEvents>("/root/GameEvents")
+            .EmitSignal("LevelChanged", _nextLevel);
     }
 }

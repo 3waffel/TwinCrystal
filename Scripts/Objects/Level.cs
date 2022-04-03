@@ -1,10 +1,12 @@
-using Godot;
 using System;
+using Godot;
 
 public class Level : Node2D
 {
     [Export]
-    public String _levelName;
+    private String _levelName;
+
+    public String LevelName { get => _levelName; }
 
     public override void _Ready()
     {
@@ -13,6 +15,7 @@ public class Level : Node2D
 
     public void ChangeLevel(String NextLevelName)
     {
-        GetNode<GameEvents>("/root/GameEvents").EmitSignal("LevelChanged", NextLevelName);
+        GetNode<GameEvents>("/root/GameEvents")
+            .EmitSignal("LevelChanged", NextLevelName);
     }
 }
