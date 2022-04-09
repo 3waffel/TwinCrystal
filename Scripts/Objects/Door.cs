@@ -4,7 +4,9 @@ using Godot;
 public class Door : Interactable
 {
     [Export]
-    protected PackedScene _nextLevel;
+    protected PackedScene _nextLevel = null;
+
+    public PackedScene NextLevel { get => _nextLevel; set => _nextLevel = value; }
 
     public override void _Process(float delta)
     {

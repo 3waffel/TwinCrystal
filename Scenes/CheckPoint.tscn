@@ -4,16 +4,14 @@
 [ext_resource path="res://Assets/Textures/Icons/campfire.svg" type="Texture" id=2]
 
 [node name="CheckPoint" type="Area2D"]
-position = Vector2( 4632, 160 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-_interactionObjectPath = NodePath("../Player")
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.352941, 0.952941, 0.945098, 0.54902 )
 texture = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 104, 64, -88, 64, -64, -64, 64, -64 )
+polygon = PoolVector2Array( 64, 64, -64, 64, -64, -64, 64, -64 )

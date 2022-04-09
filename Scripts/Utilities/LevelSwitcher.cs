@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Godot;
 
 public class LevelSwitcher : Node2D
@@ -12,6 +14,8 @@ public class LevelSwitcher : Node2D
 
     private Viewport _viewport;
 
+    private Godot.Collections.Array _levelList;
+
     public override void _Ready()
     {
         _viewportContainer = GetNode<ViewportContainer>("ViewportContainer");
@@ -23,31 +27,45 @@ public class LevelSwitcher : Node2D
             .Connect("LevelChanged", this, nameof(OnLevelChanged));
     }
 
-    /// <summary>
-    /// Called when the current level is changed.
-    /// </summary>
-    /// <param name="NextLevelName"> The name of the level that will be changed to. </param>
     public void OnLevelChanged(PackedScene nextLevel)
     {
+        Node2D nextLevelInstance = null;
+        if (nextLevel != null)
+        {
+            nextLevelInstance = (Node2D) nextLevel.Instance();
+        }
+        else if (_levelList.Count >= 1)
+        {
+            nextLevelInstance = (Node2D) _levelList[_levelList.Count - 1];
+            _levelList.RemoveAt(_levelList.Count - 1);
+        }
+        else
+        {
+            // Error
+        }
+        var player = _viewport.GetNode<Player>("Player");
+        player.Velocity = Vector2.Zero;
+        player.Position = nextLevelInstance.Position;
         _viewport.RemoveChild (_levelRootNode);
-        // PackedScene packedScene = (PackedScene) new PackedScene();
-        // packedScene.Pack (_levelRootNode);
-        // ResourceSaver
-        //     .Save("res://Scenes/Levels/" + (_levelRootNode as Level).LevelName + "_tmp.tscn",
-        //     packedScene);
-
-        Node2D nextLevelInstance = (Node2D) nextLevel.Instance();
-        
-        (TileMap tileMap, Vector2 spawnPoint) = TilesGeneration.TilesGen();
-        tileMap.Position = _viewport.GetNode<Node2D>("Player").Position - spawnPoint;
-        nextLevelInstance.AddChild(tileMap);
-
         _viewport.AddChild (nextLevelInstance);
+        
+        _levelList.Add(_levelRootNode);
         _levelRootNode = nextLevelInstance;
     }
 
     public void OnViewportResized()
     {
         _viewportContainer.SetSize(GetViewport().Size);
+    }
+
+    public void SaveLevelAsPackedScene()
+    {
+        PackedScene packedScene = new PackedScene();
+        packedScene.Pack (_levelRootNode);
+        ResourceSaver
+            .Save("user://Scenes/Levels/" +
+            (_levelRootNode as Level).LevelName +
+            "_tmp.tscn",
+            packedScene);
     }
 }

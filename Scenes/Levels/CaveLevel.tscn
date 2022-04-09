@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Tiles/Default.tres" type="TileSet" id=1]
+[ext_resource path="res://Scripts/Objects/Level.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/Door.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Utilities/TileMapGeneration.cs" type="Script" id=4]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+_levelName = "Second"
+
+[node name="Door" parent="." instance=ExtResource( 3 )]
+
+[node name="TileMapGen" type="TileMap" parent="."]
+z_index = -1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( -131075, 0, 0, -131074, 0, 0, -131073, 0, 0, -196608, 0, 0, -196607, 0, 0, -196606, 0, 0, -65539, 0, 0, -65538, 1, 0, -65537, 1, 0, -131072, 1, 0, -131071, 1, 0, -131070, 0, 0, -3, 0, 0, -2, 1, 0, -1, 1, 0, -65536, 1, 0, -65535, 1, 0, -65534, 0, 0, 65533, 0, 0, 65534, 1, 0, 65535, 1, 0, 0, 1, 0, 1, 1, 0, 2, 0, 0, 131069, 0, 0, 131070, 1, 0, 131071, 1, 0, 65536, 1, 0, 65537, 1, 0, 65538, 0, 0, 196605, 0, 0, 196606, 0, 0, 196607, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0 )
+script = ExtResource( 4 )

@@ -148,7 +148,6 @@ __meta__ = {
 [node name="GraphEdit" type="GraphEdit" parent="CanvasLayer/Map"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-scroll_offset = Vector2( -32, -14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

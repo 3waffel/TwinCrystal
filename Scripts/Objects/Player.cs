@@ -13,6 +13,11 @@ public class Player : KinematicBody2D
     private float gravity = 1000f;
 
     private Vector2 _velocity = Vector2.Zero;
+    public Vector2 Velocity
+    {
+        get => _velocity;
+        set => _velocity = value;
+    }
 
     public override void _Ready()
     {
