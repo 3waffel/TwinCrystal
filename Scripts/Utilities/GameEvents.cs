@@ -12,7 +12,7 @@ public class GameEvents : Node
     public delegate void BulletHitTarget(Node2D target);
 
     [Signal]
-    public delegate void LevelChanged(PackedScene nextLevel);
+    public delegate void LevelChanged(Interactable interactable);
 
     public override void _Ready()
     {

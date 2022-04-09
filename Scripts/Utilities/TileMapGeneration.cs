@@ -47,11 +47,13 @@ public class TileMapGeneration : Node
             {
                 if (
                     i % width > 0 &&
-                    (bool) list[i - 1] &&
+                    (bool) list[i - 1] && // current tile to the left
+                    i % width < width - 1 &&
+                    (bool) list[i + 1] && // current tile to the right
                     i / width > 0 &&
-                    (bool) list[i - width] &&
+                    (bool) list[i - width] && // current tile above
                     i / width < height - 1 &&
-                    (bool) list[i + width]
+                    (bool) list[i + width] // current tile below
                 )
                 {
                     spawnPoint = new Vector2(i % width, i / width);

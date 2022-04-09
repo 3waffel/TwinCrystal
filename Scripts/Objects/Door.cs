@@ -4,7 +4,7 @@ using Godot;
 public class Door : Interactable
 {
     [Export]
-    protected PackedScene _nextLevel = null;
+    protected PackedScene _nextLevel;
 
     public PackedScene NextLevel { get => _nextLevel; set => _nextLevel = value; }
 
@@ -17,8 +17,7 @@ public class Door : Interactable
             {
                 GD.Print("Door: _Process");
                 // GetNode<AnimationPlayer>("AnimationPlayer").Play("Open");
-                GetNode<GameEvents>("/root/GameEvents")
-                    .EmitSignal("LevelChanged", _nextLevel);
+                GetNode<GameEvents>("/root/GameEvents").EmitSignal("LevelChanged", this);
             }
         }
     }

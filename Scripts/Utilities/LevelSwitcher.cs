@@ -21,17 +21,19 @@ public class LevelSwitcher : Node2D
         _viewportContainer = GetNode<ViewportContainer>("ViewportContainer");
         _viewport = _viewportContainer.GetNode<Viewport>("Viewport");
         _levelRootNode = GetNode<Node2D>(_levelRoot);
+        _levelList = new Godot.Collections.Array();
 
         GetViewport().Connect("size_changed", this, nameof(OnViewportResized));
         GetNode<GameEvents>("/root/GameEvents")
             .Connect("LevelChanged", this, nameof(OnLevelChanged));
     }
 
-    public void OnLevelChanged(PackedScene nextLevel)
+    public void OnLevelChanged(Interactable interactable)
     {
-        Node2D nextLevelInstance = null;
-        if (nextLevel != null)
+        Node2D nextLevelInstance;
+        if ((interactable as Door).NextLevel != null)
         {
+            PackedScene nextLevel = (interactable as Door).NextLevel;
             nextLevelInstance = (Node2D) nextLevel.Instance();
         }
         else if (_levelList.Count >= 1)
@@ -41,15 +43,15 @@ public class LevelSwitcher : Node2D
         }
         else
         {
-            // Error
+            GD.Print("No more levels to load");
+            return;
         }
         var player = _viewport.GetNode<Player>("Player");
         player.Velocity = Vector2.Zero;
         player.Position = nextLevelInstance.Position;
+        _levelList.Add (_levelRootNode);
         _viewport.RemoveChild (_levelRootNode);
         _viewport.AddChild (nextLevelInstance);
-        
-        _levelList.Add(_levelRootNode);
         _levelRootNode = nextLevelInstance;
     }
 
