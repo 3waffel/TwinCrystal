@@ -14,6 +14,12 @@ public class GameEvents : Node
     [Signal]
     public delegate void LevelChanged(Interactable interactable);
 
+    [Signal]    
+    public delegate void ConversationStarted(Conversable conversable);
+
+    [Signal]
+    public delegate void BubbleTriggered(int index);
+
     public override void _Ready()
     {
         

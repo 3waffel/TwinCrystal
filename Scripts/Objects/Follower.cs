@@ -8,6 +8,8 @@ public class Follower : KinematicBody2D
 
     protected KinematicBody2D _following;
 
+    protected bool _isFollowing = true;
+    
     [Export]
     protected float _distance = 50f;
 
@@ -18,6 +20,10 @@ public class Follower : KinematicBody2D
 
     public override void _Process(float delta)
     {
+        if (!_isFollowing)
+        {
+            return;
+        }
         Vector2 moveTo = _following.Position - Position;
         Vector2 moveToNormalized = moveTo.Normalized();
         moveToNormalized *= _distance;
