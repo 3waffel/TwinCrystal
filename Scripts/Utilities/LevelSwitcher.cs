@@ -35,11 +35,13 @@ public class LevelSwitcher : Node2D
         {
             PackedScene nextLevel = (interactable as Door).NextLevel;
             nextLevelInstance = (Node2D) nextLevel.Instance();
+            _levelList.Add (_levelRootNode);
         }
         else if (_levelList.Count >= 1)
         {
             nextLevelInstance = (Node2D) _levelList[_levelList.Count - 1];
             _levelList.RemoveAt(_levelList.Count - 1);
+            _levelRootNode.QueueFree();
         }
         else
         {
@@ -47,12 +49,14 @@ public class LevelSwitcher : Node2D
             return;
         }
         var player = _viewport.GetNode<Player>("Player");
+        var camera = _viewport.GetNode<Camera2D>("Camera");
         player.Velocity = Vector2.Zero;
         player.Position = nextLevelInstance.Position;
-        _levelList.Add (_levelRootNode);
+        camera.Position = player.Position;
         _viewport.RemoveChild (_levelRootNode);
         _viewport.AddChild (nextLevelInstance);
         _levelRootNode = nextLevelInstance;
+        GD.Print(_levelList.Count);
     }
 
     public void OnViewportResized()

@@ -16,6 +16,8 @@ public class TileMapGeneration : Node
 
     private Task<Vector2> _preloadTask;
 
+    private CancellationTokenSource _preloadCancellationTokenSource;
+
     public static Godot.Collections.Array BasicGen(int height, int width)
     {
         var random = new StandardGenerator();
@@ -36,7 +38,7 @@ public class TileMapGeneration : Node
         var list = BasicGen(height, width);
         TileMap tileMap = new TileMap();
         tileMap.TileSet =
-            ResourceLoader.Load<TileSet>("res://Assets/Tiles/Default.tres");
+            ResourceLoader.Load<TileSet>("res://Assets/Tiles/Wall1.tres");
         tileMap.CellSize = new Vector2(32, 32);
         tileMap.ZIndex = -1;
 
@@ -86,26 +88,42 @@ public class TileMapGeneration : Node
 
     public override void _Ready()
     {
-        _preloadTask =
-            Task
-                .Run(() =>
-                {
-                    Vector2 spawnPoint = new Vector2(0, 0);
-                    (_preloadTileMap, spawnPoint) =
-                        TileMapGeneration.TilesGen();
-                    return spawnPoint;
-                });
+        _preloadCancellationTokenSource = new CancellationTokenSource();
+        CancellationToken cancellationToken =
+            _preloadCancellationTokenSource.Token;
 
-        _preloadTask
-            .ContinueWith(task =>
-            {
-                GD.Print(task.Result);
-                _preloadTileMap.Position = task.Result;
-                GetParent().AddChild(_preloadTileMap);
-            })
-            .ContinueWith(task =>
-            {
-                QueueFree();
-            });
+        try
+        {
+            _preloadTask =
+                Task
+                    .Run(() =>
+                    {
+                        Vector2 spawnPoint = new Vector2(0, 0);
+                        (_preloadTileMap, spawnPoint) =
+                            TileMapGeneration.TilesGen();
+                        return spawnPoint;
+                    },
+                    cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            GD.Print("Preload task cancelled");
+        }
+        finally
+        {
+            _preloadTask
+                .ContinueWith(task =>
+                {
+                    GD.Print(task.Result);
+                    _preloadTileMap.Position = task.Result;
+                    GetParent().AddChild(_preloadTileMap);
+                },
+                TaskContinuationOptions.OnlyOnRanToCompletion)
+                .ContinueWith(task =>
+                {
+                    QueueFree();
+                    _preloadCancellationTokenSource.Dispose();  
+                });
+        }
     }
 }

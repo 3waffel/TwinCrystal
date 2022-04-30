@@ -41,7 +41,7 @@ public class BulletFollower : Follower
     public override void _Process(float delta)
     {
         base._Process(delta);
-        if (Input.IsKeyPressed((int) KeyList.Space) && _canShoot)
+        if (Input.IsActionJustPressed("skill") && _canShoot)
         {
             _canShoot = false;
             _timer.Start (bulletInterval);
@@ -80,7 +80,10 @@ public class BulletFollower : Follower
     {
         if (target != _following)
         {
-            GD.Print("Bullet hit something");
+            if (target is Enemy)
+            {
+                target.QueueFree();
+            }
             bullet.QueueFree();
         }
     }

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Assets/Tiles/Default.tres" type="TileSet" id=1]
+[ext_resource path="res://Assets/Tiles/Wall1.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Objects/Level.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Door.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Utilities/TileMapGeneration.cs" type="Script" id=4]

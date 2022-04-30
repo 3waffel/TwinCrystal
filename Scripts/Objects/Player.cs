@@ -1,5 +1,7 @@
 using System;
 using Godot;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Player : KinematicBody2D
 {
@@ -20,6 +22,25 @@ public class Player : KinematicBody2D
 
     private int jumpsMade = 0;
 
+    [Export]
+    private float dashSpeed = 800f;
+
+    [Export]
+    private float dashInterval = 2f;
+
+    [Export]
+    private float dashDuration = 0.1f;
+
+    private bool readyToDash = true;
+
+    private bool isDashing = false;
+
+    private Timer dashReadyTimer;
+
+    private Timer dashStateTimer;
+    
+    Vector2 dashDirection = Vector2.Zero;
+
     private Vector2 _velocity = Vector2.Zero;
     public Vector2 Velocity
     {
@@ -29,10 +50,17 @@ public class Player : KinematicBody2D
 
     public override void _Ready()
     {
+        dashReadyTimer = new Timer();
+        dashStateTimer = new Timer();
+        dashReadyTimer.Connect("timeout", this, nameof(OnDashReady));
+        dashStateTimer.Connect("timeout", this, nameof(OnDashEnd));
+        AddChild(dashReadyTimer);
+        AddChild(dashStateTimer);
     }
 
     public override void _Process(float delta)
     {
+
     }
 
     public override void _PhysicsProcess(float delta)
@@ -46,9 +74,28 @@ public class Player : KinematicBody2D
         float horizontalDirection =
             Input.GetActionStrength("move_right") -
             Input.GetActionStrength("move_left");
-        _velocity.x = horizontalDirection * moveSpeed;
-        _velocity.y += gravity * delta;
+        float verticalDirection =
+            Input.GetActionStrength("move_down") -
+            Input.GetActionStrength("move_up");
+        
+        dashDirection = new Vector2(
+            horizontalDirection,
+            verticalDirection
+        );
 
+        _velocity = isDashing ? dashDirection.Normalized() * dashSpeed :
+            new Vector2(
+                horizontalDirection * moveSpeed,
+                _velocity.y + gravity * delta
+            );
+
+        if (readyToDash && Input.IsActionJustPressed("dash") && dashDirection != Vector2.Zero)
+        {
+            readyToDash = false;
+            isDashing = true;
+            dashReadyTimer.Start(dashInterval);
+            dashStateTimer.Start(dashDuration);
+        }        
 
         if (isJumping)
         {
@@ -70,4 +117,8 @@ public class Player : KinematicBody2D
 
         _velocity = MoveAndSlide(_velocity, Vector2.Up);
     }
+
+    private void OnDashReady() => readyToDash = true;
+
+    private void OnDashEnd() => isDashing = false;
 }

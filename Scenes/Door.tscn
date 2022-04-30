@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/Objects/Door.cs" type="Script" id=1]
-[ext_resource path="res://Assets/Textures/Icons/structure_gate.svg" type="Texture" id=3]
+[ext_resource path="res://Assets/Textures/Samples/Icons/structure_gate.svg" type="Texture" id=3]
 
 [node name="Door" type="Area2D"]
 script = ExtResource( 1 )

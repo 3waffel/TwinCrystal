@@ -1,0 +1,27 @@
+[gd_resource type="AnimatedTexture" load_steps=7 format=2]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[sub_resource type="NoiseTexture" id=2]
+noise = SubResource( 1 )
+
+[sub_resource type="OpenSimplexNoise" id=3]
+seed = 1
+
+[sub_resource type="NoiseTexture" id=4]
+noise = SubResource( 3 )
+
+[sub_resource type="OpenSimplexNoise" id=5]
+seed = 2
+
+[sub_resource type="NoiseTexture" id=6]
+noise = SubResource( 5 )
+
+[resource]
+flags = 7
+frames = 3
+frame_0/texture = SubResource( 2 )
+frame_1/texture = SubResource( 4 )
+frame_1/delay_sec = 0.0
+frame_2/texture = SubResource( 6 )
+frame_2/delay_sec = 0.0
