@@ -9,6 +9,10 @@ public class Bullet : Area2D
     public Texture BulletTexture { get => GetNode<Sprite>("Sprite").Texture; set => GetNode<Sprite>("Sprite").Texture = value; }
 
     [Export]
+    private float damage = 10f;
+    public float Damage { get => damage; set => damage = value; }
+
+    [Export]
     private float moveSpeed = 5f;
     public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
 
