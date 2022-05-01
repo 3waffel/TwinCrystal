@@ -1,15 +1,17 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/CheckPoint.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Door.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Tiles/Wall1.tres" type="TileSet" id=3]
-[ext_resource path="res://Scenes/Levels/CaveLevel.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Levels/ChurchLevel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Levels/1_1LevelCave.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Levels/2LevelChurch.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Textures/Samples/Icons/tag_empty.svg" type="Texture" id=7]
 [ext_resource path="res://Scenes/Conversable.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/Textures/Samples/Icons/d12.svg" type="Texture" id=9]
 [ext_resource path="res://Scripts/Objects/Level.cs" type="Script" id=10]
 [ext_resource path="res://Assets/Tiles/Background.tres" type="TileSet" id=11]
+[ext_resource path="res://Scripts/Objects/Enemy/WanderingEnemy.cs" type="Script" id=12]
 
 [sub_resource type="OpenSimplexNoise" id=8]
 octaves = 9
@@ -64,3 +66,8 @@ _nextLevel = ExtResource( 5 )
 [node name="Conversable" parent="." instance=ExtResource( 8 )]
 position = Vector2( 832, 512 )
 _conversation = [ "A and D to move left and right, press W to jump", "Press Space to dash", "Press R to use skill", "Press F to interact" ]
+
+[node name="Enemy2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 952, 201 )
+script = ExtResource( 12 )
+_bulletTexture = ExtResource( 7 )

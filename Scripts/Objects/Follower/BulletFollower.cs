@@ -82,7 +82,7 @@ public class BulletFollower : Follower
         {
             if (target is Enemy)
             {
-                target.QueueFree();
+                (target as Enemy).Damage((bullet as Bullet).Damage);
             }
             bullet.QueueFree();
         }

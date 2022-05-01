@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Objects/Level.cs" type="Script" id=1]
-[ext_resource path="res://Assets/Tiles/Wall1.tres" type="TileSet" id=2]
+[ext_resource path="res://Assets/Tiles/Wall3.tres" type="TileSet" id=2]
 [ext_resource path="res://Scenes/Door.tscn" type="PackedScene" id=3]
 
 [node name="Node2D" type="Node2D"]
@@ -9,7 +9,7 @@ script = ExtResource( 1 )
 
 [node name="Door" parent="." instance=ExtResource( 3 )]
 
-[node name="TileMapGen" type="TileMap" parent="."]
+[node name="TileMap" type="TileMap" parent="."]
 z_index = -1
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 32, 32 )

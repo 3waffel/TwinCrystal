@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scripts/Objects/CheckPoint.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Objects/Interactable/CheckPoint.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/Samples/Icons/campfire.svg" type="Texture" id=2]
 
 [node name="CheckPoint" type="Area2D"]

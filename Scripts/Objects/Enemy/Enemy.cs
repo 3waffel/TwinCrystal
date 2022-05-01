@@ -4,9 +4,6 @@ using Godot;
 public class Enemy : KinematicBody2D
 {
     [Export]
-    private float _moveSpeed = 100f;
-
-    [Export]
     private PackedScene _bulletScene = null;
 
     [Export]
@@ -17,6 +14,9 @@ public class Enemy : KinematicBody2D
 
     [Export]
     private Node2D _target = null;
+
+    [Export]
+    private float _health = 100f;
 
     public override void _Ready()
     {
@@ -65,5 +65,14 @@ public class Enemy : KinematicBody2D
     public void OnBulletHit(Node2D bullet, Node2D target)
     {
         bullet.QueueFree();
+    }
+
+    public void Damage(float damage)
+    {
+        _health -= damage;
+        if (_health <= 0)
+        {
+            QueueFree();
+        }
     }
 }
