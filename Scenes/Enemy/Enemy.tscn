@@ -1,24 +1,24 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Assets/Textures/Samples/Icons/tag_empty.svg" type="Texture" id=1]
-[ext_resource path="res://Assets/Textures/Samples/Icons/dice_sword.svg" type="Texture" id=2]
-[ext_resource path="res://Scripts/Objects/Enemy/Enemy.cs" type="Script" id=3]
-[ext_resource path="res://Scenes/Bullet.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Bullet/Bullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Objects/Enemy/Enemy.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Textures/Samples/Icons/dice_sword.svg" type="Texture" id=3]
+[ext_resource path="res://Assets/Textures/Samples/Icons/tag_empty.svg" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=12]
 radius = 200.0
 
 [node name="Enemy" type="KinematicBody2D"]
 position = Vector2( 928, 224 )
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-_bulletScene = ExtResource( 4 )
-bulletTexture = ExtResource( 1 )
+_bulletScene = ExtResource( 1 )
+bulletTexture = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( 32, -29.6, 32, 29, 29.6, 32, -29, 32, -32, 29.6, -32, -29.6, -29, -32, 29, -32 )

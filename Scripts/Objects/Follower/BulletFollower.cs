@@ -3,12 +3,14 @@ using Godot;
 
 public class BulletFollower : Follower
 {
+    // TODO: specify what kind of bullet this follower shoots
     [Export]
     private PackedScene bulletScene;
 
     [Export]
     private Texture bulletTexture;
 
+    // TODO: too explicit
     [Export]
     private float bulletSpeed = 5f;
 
@@ -54,14 +56,17 @@ public class BulletFollower : Follower
         for (int i = 0; i < bulletCount; i++)
         {
             rng.Randomize();
+            Bullet bullet = (Bullet) bulletScene.Instance();
+            bullet.Position = Position;
+
+            // TODO: bullet don't need target
             Vector2 bulletDirection =
                 new Vector2(rng.RandfRange(-100f, 100f),
                     rng.RandfRange(-100f, 100f));
+            bullet.Target = Position + bulletDirection;
             bulletDirection.Normalized();
             bulletDirection *= bulletSpeed;
-            Bullet bullet = (Bullet) bulletScene.Instance();
-            bullet.Position = Position;
-            bullet.Target = Position + bulletDirection;
+
             bullet.Shooter = this;
             bullet.LifeTime = bulletLifeTime;
             bullet.BulletTexture = bulletTexture;
@@ -80,6 +85,7 @@ public class BulletFollower : Follower
     {
         if (target != _following)
         {
+            // TODO: signal source
             if (target is Enemy)
             {
                 (target as Enemy).Damage((bullet as Bullet).Damage);

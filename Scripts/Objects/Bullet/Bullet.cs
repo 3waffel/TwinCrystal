@@ -12,6 +12,7 @@ public class Bullet : Area2D
     private float damage = 10f;
     public float Damage { get => damage; set => damage = value; }
 
+    // TODO: bullet don't need move speed
     [Export]
     private float moveSpeed = 5f;
     public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
@@ -22,6 +23,7 @@ public class Bullet : Area2D
 
     private Timer lifeTimer;
 
+    // TODO: bullet don't need target
     [Export]
     private Vector2 _target;
     public Vector2 Target
@@ -40,6 +42,10 @@ public class Bullet : Area2D
 
     public override void _Ready()
     {
+        if (Target == null)
+        {
+            QueueFree();
+        }
         lifeTimer = GetNode<Timer>("LifeTimer");
         lifeTimer.WaitTime = lifeTime;
         lifeTimer.Connect("timeout", this, nameof(OnLifeTimerTimeout));
@@ -48,18 +54,10 @@ public class Bullet : Area2D
         Connect("body_entered", this, nameof(OnBodyEntered));
     }
 
+    // TODO: bullet movement is not specified
     public override void _Process(float delta)
     {
-        if (Target == null)
-        {
-            QueueFree();
-        }
-        else
-        {
-            Vector2 direction = Target - GlobalPosition;
-            direction.Normalized();
-            Position += direction * moveSpeed * delta;
-        }
+        // do nothing
     }
 
     public void OnBodyEntered(Node2D target)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Levels/1LevelCave.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Bullet/DirectBullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Utilities/LevelSwitcher.cs" type="Script" id=3]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Follower.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Follower/Follower.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Objects/Camera.cs" type="Script" id=6]
 [ext_resource path="res://Scenes/Bubble.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=8]
@@ -41,6 +42,7 @@ _trackObjectPath = NodePath("../Player")
 dashDuration = 0.2
 
 [node name="Follower" parent="ViewportContainer/Viewport" instance=ExtResource( 5 )]
+bulletScene = ExtResource( 2 )
 bulletTexture = ExtResource( 10 )
 
 [node name="DefaultLevel" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]

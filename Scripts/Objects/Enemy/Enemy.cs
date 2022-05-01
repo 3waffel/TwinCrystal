@@ -3,6 +3,7 @@ using Godot;
 
 public class Enemy : KinematicBody2D
 {
+    // TODO: specify what kind of bullet this enemy shoots
     [Export]
     private PackedScene _bulletScene = null;
 
@@ -39,7 +40,10 @@ public class Enemy : KinematicBody2D
     {
         var bullet = (Bullet) _bulletScene.Instance();
         bullet.Position = Position;
+
+        // TODO: bullet don't need target
         bullet.Target = _target.GlobalPosition;
+
         bullet.Shooter = this;
         bullet.BulletTexture = _bulletTexture;
         bullet.Connect("BulletHit", this, nameof(OnBulletHit));
