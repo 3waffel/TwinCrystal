@@ -7,38 +7,26 @@ public class Player : KinematicBody2D
 {
     [Export]
     private float gravity = 1000f;
-
     [Export]
     private float moveSpeed = 400f;
-
     [Export]
     private float jumpStrength = 400f;
-
     [Export]
     private float doubleJumpStrength = 400f;
-
     [Export]
-    private int maximumJumps = OS.IsDebugBuild()? 100 : 2;
-
+    private int maximumJumps = 2;
     private int jumpsMade = 0;
 
     [Export]
     private float dashSpeed = 800f;
-
     [Export]
     private float dashInterval = 2f;
-
     [Export]
     private float dashDuration = 0.1f;
-
     private bool readyToDash = true;
-
     private bool isDashing = false;
-
     private Timer dashReadyTimer;
-
     private Timer dashStateTimer;
-    
     Vector2 dashDirection = Vector2.Zero;
 
     private Vector2 _velocity = Vector2.Zero;
@@ -46,6 +34,24 @@ public class Player : KinematicBody2D
     {
         get => _velocity;
         set => _velocity = value;
+    }
+
+    [Export]
+    private float invinciblityTime = 2f;
+    private bool isInvincible = false;
+    private Timer invinciblityTimer;
+
+    [Export]
+    private float maxHealth = 100f;
+    private float _health = 100f;
+    public float Health
+    {
+        get => _health;
+        set
+        {
+            _health = value;
+            GetNode<GameEvents>("/root/GameEvents").EmitSignal(nameof(GameEvents.PlayerHealthChanged), _health, maxHealth);
+        }
     }
 
     public override void _Ready()
@@ -56,6 +62,12 @@ public class Player : KinematicBody2D
         dashStateTimer.Connect("timeout", this, nameof(OnDashEnd));
         AddChild(dashReadyTimer);
         AddChild(dashStateTimer);
+
+        invinciblityTimer = new Timer();
+        invinciblityTimer.Connect("timeout", this, nameof(OnInvinciblityEnd));
+        AddChild(invinciblityTimer);
+
+        GetNode<GameEvents>("/root/GameEvents").Connect(nameof(GameEvents.EnterCheckPoint), this, nameof(OnEnterCheckPoint));
     }
 
     public override void _Process(float delta)
@@ -114,11 +126,37 @@ public class Player : KinematicBody2D
         {
             jumpsMade = 0;
         }
-
+    
         _velocity = MoveAndSlide(_velocity, Vector2.Up);
     }
 
     private void OnDashReady() => readyToDash = true;
 
     private void OnDashEnd() => isDashing = false;
+
+    private void OnInvinciblityEnd() => isInvincible = false;
+
+    public void Damage(float damage)
+    {
+        if (isInvincible)
+        {
+            return;
+        }
+        GD.Print("Player damaged");
+        Health -= damage;
+        isInvincible = true;
+        invinciblityTimer.Start(invinciblityTime);
+        
+        if (Health <= 0f)
+        {
+            GD.Print("Player died");
+            GetNode<GameEvents>("/root/GameEvents").EmitSignal(nameof(GameEvents.PlayerDied));
+        }
+    }
+
+    private void OnEnterCheckPoint(CheckPoint checkPoint)
+    {
+        GD.Print("Player entered check point");
+        Health = maxHealth;
+    }
 }

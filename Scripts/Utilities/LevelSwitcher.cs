@@ -2,60 +2,72 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Godot;
+using System.Collections.Generic;
 
 public class LevelSwitcher : Node2D
 {
-    [Export]
-    private NodePath _levelRoot;
-
-    private Node2D _levelRootNode;
+    private Level _levelRootNode;
 
     private ViewportContainer _viewportContainer;
-
     private Viewport _viewport;
 
-    private Godot.Collections.Array _levelList;
+    [Export]
+    private Godot.Collections.Array<PackedScene> _levelScenes = new Godot.Collections.Array<PackedScene>();
+    private Godot.Collections.Array<Level> _levelList = new Godot.Collections.Array<Level>();
+    public int ScenesCount { get => _levelScenes.Count; }
 
     public override void _Ready()
     {
         _viewportContainer = GetNode<ViewportContainer>("ViewportContainer");
         _viewport = _viewportContainer.GetNode<Viewport>("Viewport");
-        _levelRootNode = GetNode<Node2D>(_levelRoot);
-        _levelList = new Godot.Collections.Array();
+        _levelList.Resize(ScenesCount);
+
 
         GetViewport().Connect("size_changed", this, nameof(OnViewportResized));
         GetNode<GameEvents>("/root/GameEvents")
             .Connect("LevelChanged", this, nameof(OnLevelChanged));
+
+        _levelRootNode = _levelScenes[0].Instance() as Level;
+        _levelList[0] = _levelRootNode;
+        _viewport.AddChild(_levelRootNode);
     }
 
     public void OnLevelChanged(Interactable interactable)
     {
-        Node2D nextLevelInstance;
-        if ((interactable as Door).NextLevel != null)
+        Level nextLevelInstance;
+        var player = _viewport.GetNode<Player>("Player");
+        var camera = _viewport.GetNode<Camera2D>("Camera");
+        if (interactable is Door)
         {
-            PackedScene nextLevel = (interactable as Door).NextLevel;
-            nextLevelInstance = (Node2D) nextLevel.Instance();
-            _levelList.Add (_levelRootNode);
-        }
-        else if (_levelList.Count >= 1)
-        {
-            nextLevelInstance = (Node2D) _levelList[_levelList.Count - 1];
-            _levelList.RemoveAt(_levelList.Count - 1);
-            _levelRootNode.QueueFree();
+            var door = interactable as Door;
+            // TODO
+            if (_levelList[door.ToLevelIndex] == null) 
+            {
+                nextLevelInstance = _levelScenes[door.ToLevelIndex].Instance() as Level;
+                _levelList[door.ToLevelIndex] = nextLevelInstance;
+                nextLevelInstance.LevelIndex = door.ToLevelIndex;
+                GD.Print("New Level: " + nextLevelInstance.LevelName);
+            }
+            else
+            {
+                nextLevelInstance = _levelList[door.ToLevelIndex];
+                GD.Print("Existing Level: " + nextLevelInstance.LevelName);
+            }
         }
         else
         {
-            GD.Print("No more levels to load");
+            GD.Print("LevelSwitcher: OnLevelChanged: Unknown interactable type");
             return;
         }
-        var player = _viewport.GetNode<Player>("Player");
-        var camera = _viewport.GetNode<Camera2D>("Camera");
-        player.Velocity = Vector2.Zero;
-        player.Position = nextLevelInstance.Position;
-        camera.Position = player.Position;
         _viewport.RemoveChild (_levelRootNode);
         _viewport.AddChild (nextLevelInstance);
         _levelRootNode = nextLevelInstance;
+
+        var toDoor = nextLevelInstance.DoorIndexMap[(interactable as Door).ToDoorIndex];
+        player.Position = toDoor.Position;
+        player.Velocity = Vector2.Zero;
+        camera.Position = player.Position;
+
         GD.Print(_levelList.Count);
     }
 

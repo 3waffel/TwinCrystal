@@ -20,7 +20,6 @@ public class Bullet : Area2D
     [Export]
     private float lifeTime = 5f;
     public float LifeTime { get => lifeTime; set => lifeTime = value; }
-
     private Timer lifeTimer;
 
     // TODO: bullet don't need target

@@ -7,7 +7,6 @@
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
-_levelName = "Second"
 
 [node name="Door" parent="." instance=ExtResource( 3 )]
 

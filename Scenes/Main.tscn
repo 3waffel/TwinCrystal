@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Levels/1LevelCave.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Bullet/DirectBullet.tscn" type="PackedScene" id=2]
@@ -8,12 +8,15 @@
 [ext_resource path="res://Scripts/Objects/Camera.cs" type="Script" id=6]
 [ext_resource path="res://Scenes/Bubble.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Follower/GuardFollower.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Assets/Textures/Samples/Icons/d2_outline.svg" type="Texture" id=10]
-[ext_resource path="res://Scenes/ConversationPanel.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Levels/2LevelChurch.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Levels/3LevelTower.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Levels/1_1LevelCave.tscn" type="PackedScene" id=13]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 3 )
-_levelRoot = NodePath("ViewportContainer/Viewport/DefaultLevel")
+_levelScenes = [ ExtResource( 1 ), ExtResource( 13 ), ExtResource( 11 ), ExtResource( 12 ) ]
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -25,8 +28,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control" parent="ViewportContainer" instance=ExtResource( 12 )]
-visible = false
+[node name="UI" parent="ViewportContainer" instance=ExtResource( 8 )]
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 1024, 600 )
@@ -39,14 +41,15 @@ script = ExtResource( 6 )
 _trackObjectPath = NodePath("../Player")
 
 [node name="Player" parent="ViewportContainer/Viewport" instance=ExtResource( 4 )]
+moveSpeed = 1000.0
 dashDuration = 0.2
 
-[node name="Follower" parent="ViewportContainer/Viewport" instance=ExtResource( 5 )]
+[node name="BulletFollower" parent="ViewportContainer/Viewport" instance=ExtResource( 5 )]
 bulletScene = ExtResource( 2 )
 bulletTexture = ExtResource( 10 )
 
-[node name="DefaultLevel" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
-
-[node name="UI" parent="." instance=ExtResource( 8 )]
+[node name="GuardFollower" parent="ViewportContainer/Viewport" instance=ExtResource( 9 )]
+_followingPath = NodePath("../Player")
+_distance = 100.0
 
 [node name="Bubble" parent="." instance=ExtResource( 7 )]

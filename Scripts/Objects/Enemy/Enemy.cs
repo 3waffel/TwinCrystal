@@ -6,10 +6,8 @@ public class Enemy : KinematicBody2D
     // TODO: specify what kind of bullet this enemy shoots
     [Export]
     private PackedScene _bulletScene = null;
-
     [Export]
     private Texture _bulletTexture = null;
-
     [Export]
     private float _bulletSpeed = 50f;
 
@@ -18,6 +16,9 @@ public class Enemy : KinematicBody2D
 
     [Export]
     private float _health = 100f;
+
+    // TODO:
+    private float deltaSum = 0f;
 
     public override void _Ready()
     {
@@ -30,10 +31,12 @@ public class Enemy : KinematicBody2D
 
     public override void _Process(float delta)
     {
-        if (_target != null)
+        if (_target != null && deltaSum > 0.5f)
         {
+            deltaSum = 0;
             Attack();
         }
+        deltaSum += delta;
     }
 
     public void Attack()
@@ -69,6 +72,10 @@ public class Enemy : KinematicBody2D
     public void OnBulletHit(Node2D bullet, Node2D target)
     {
         bullet.QueueFree();
+        if (target is Player)
+        {
+            (target as Player).Damage((bullet as Bullet).Damage);
+        }
     }
 
     public void Damage(float damage)
