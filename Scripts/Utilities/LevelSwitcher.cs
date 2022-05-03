@@ -14,6 +14,7 @@ public class LevelSwitcher : Node2D
     [Export]
     private Godot.Collections.Array<PackedScene> _levelScenes = new Godot.Collections.Array<PackedScene>();
     private Godot.Collections.Array<Level> _levelList = new Godot.Collections.Array<Level>();
+    public Godot.Collections.Array<Level> LevelList { get => _levelList; }
     public int ScenesCount { get => _levelScenes.Count; }
 
     public override void _Ready()

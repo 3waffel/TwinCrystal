@@ -24,6 +24,7 @@ public class UI : Control
 
         gameEvents.Connect(nameof(GameEvents.PlayerHealthChanged), this, nameof(OnPlayerHealthChanged));
         gameEvents.Connect(nameof(GameEvents.EnterCheckPoint), this, nameof(OnEnterCheckPoint));
+        gameEvents.Connect(nameof(GameEvents.LevelChanged), this, nameof(OnLevelChanged));
         // deal with signal in editor
     }
 
@@ -43,6 +44,34 @@ public class UI : Control
     {
         // var map = mapPanel.GetNode<Map>("Map");
         // map.SetCheckPoint(checkPoint);
+    }
+
+    private void OnLevelChanged(Interactable interactable)
+    {
+        var graphEdit = mapPanel.GetNode<GraphEdit>("GraphEdit");
+        var levelList = GetParent().GetParent<LevelSwitcher>().LevelList;
+
+        foreach (var node in graphEdit.GetChildren())
+        {
+            if (node is GraphNode)
+                (node as GraphNode).QueueFree();       
+        }
+
+        Vector2 position = new Vector2(0, 0);
+
+        foreach (var level in levelList)
+        {
+            if (level == null)
+            {
+                continue;
+            }
+            var graphNode = new GraphNode();
+            graphNode.Set("title", level.LevelName);
+            graphNode.Set("levelIndex", level.LevelIndex);
+            graphEdit.AddChild(graphNode);
+            graphNode.RectPosition = position;
+            position += new Vector2(0, 50);
+        }
     }
 }
 

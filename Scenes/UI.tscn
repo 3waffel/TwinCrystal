@@ -7,7 +7,7 @@
 [ext_resource path="res://Assets/Textures/Samples/Icons/suit_hearts.svg" type="Texture" id=5]
 [ext_resource path="res://Assets/Textures/Samples/Icons/card_add.svg" type="Texture" id=6]
 [ext_resource path="res://Assets/Textures/Samples/Icons/d3.svg" type="Texture" id=7]
-[ext_resource path="res://Scenes/UI.cs" type="Script" id=8]
+[ext_resource path="res://Scripts/Objects/UI.cs" type="Script" id=8]
 
 [node name="UI" type="Control"]
 anchor_right = 1.0
@@ -188,5 +188,17 @@ axis_stretch_vertical = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="GraphEdit" type="GraphEdit" parent="CanvasLayer/MapPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+scroll_offset = Vector2( -40, -40 )
+
+[node name="GraphNode" type="GraphNode" parent="CanvasLayer/MapPanel/GraphEdit"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 112.0
+margin_bottom = 104.0
+mouse_filter = 1
 
 [connection signal="pressed" from="CanvasLayer/BottomPanel/Button" to="." method="OnBottomPanelButtonPressed"]

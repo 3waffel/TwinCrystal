@@ -54,6 +54,12 @@ public class Player : KinematicBody2D
         }
     }
 
+    private Agent playerAgent;
+    public Agent PlayerAgent
+    {
+        get => playerAgent;
+    }
+
     public override void _Ready()
     {
         dashReadyTimer = new Timer();
@@ -68,6 +74,9 @@ public class Player : KinematicBody2D
         AddChild(invinciblityTimer);
 
         GetNode<GameEvents>("/root/GameEvents").Connect(nameof(GameEvents.EnterCheckPoint), this, nameof(OnEnterCheckPoint));
+
+        playerAgent = new Agent();
+        AddChild(playerAgent);
     }
 
     public override void _Process(float delta)

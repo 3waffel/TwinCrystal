@@ -195,6 +195,7 @@ config/icon="res://icon.png"
 [autoload]
 
 GameEvents="*res://Scripts/Utilities/GameEvents.cs"
+GSLoader="*res://Scenes/Autoload/GSLoader.tscn"
 
 [global]
 

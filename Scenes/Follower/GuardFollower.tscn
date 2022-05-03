@@ -5,6 +5,7 @@
 [ext_resource path="res://Assets/Textures/Samples/Icons/shield.svg" type="Texture" id=3]
 
 [node name="GuardFollower" instance=ExtResource( 2 )]
+collision_layer = 2
 script = ExtResource( 1 )
 _followingPath = null
 

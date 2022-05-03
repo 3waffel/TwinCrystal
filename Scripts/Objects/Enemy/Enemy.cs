@@ -5,17 +5,16 @@ public class Enemy : KinematicBody2D
 {
     // TODO: specify what kind of bullet this enemy shoots
     [Export]
-    private PackedScene _bulletScene = null;
+    protected PackedScene _bulletScene = null;
     [Export]
-    private Texture _bulletTexture = null;
+    protected Texture _bulletTexture = null;
     [Export]
-    private float _bulletSpeed = 50f;
+    protected float _bulletSpeed = 50f;
+
+    protected Player _target = null;
 
     [Export]
-    private Node2D _target = null;
-
-    [Export]
-    private float _health = 100f;
+    protected float _health = 100f;
 
     // TODO:
     private float deltaSum = 0f;
@@ -57,7 +56,7 @@ public class Enemy : KinematicBody2D
     {
         if (body is Player)
         {
-            _target = (Node2D) body;
+            _target = body as Player;
         }
     }
 
