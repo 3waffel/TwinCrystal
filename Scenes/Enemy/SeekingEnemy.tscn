@@ -9,3 +9,4 @@
 script = ExtResource( 2 )
 _bulletScene = ExtResource( 1 )
 _bulletTexture = ExtResource( 4 )
+detectionRadius = 300.0

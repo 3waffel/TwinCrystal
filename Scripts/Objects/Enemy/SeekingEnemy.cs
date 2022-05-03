@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class SeekingEnemy : Enemy
+public class SeekingEnemy : WanderingEnemy
 {
     private SeekBehavior seekBehavior;
 

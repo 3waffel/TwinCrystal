@@ -42,6 +42,19 @@ public class GSLoader : Node
     {
         get => utilsScript;
     }
+    [Export]
+    private GDScript pathScript = ResourceLoader.Load<GDScript>("res://Libraries/com.gdquest.godot-steering-ai-framework/GSAIPath.gd");
+    public GDScript PathScript
+    {
+        get => pathScript;
+    }
+    [Export]
+    private GDScript followPathScript = ResourceLoader.Load<GDScript>("res://Libraries/com.gdquest.godot-steering-ai-framework/Behaviors/GSAIFollowPath.gd");
+    public GDScript FollowPathScript
+    {
+        get => followPathScript;
+    }
+
 
     public override void _Ready()
     {

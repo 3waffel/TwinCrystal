@@ -19,13 +19,23 @@ public class Enemy : KinematicBody2D
     // TODO:
     private float deltaSum = 0f;
 
+    [Export]
+    private float detectionRadius = 200f;
+
     public override void _Ready()
     {
-        Area2D detectionArea = GetNode<Area2D>("DetectionArea");
+        CircleShape2D circleShape = new CircleShape2D();
+        circleShape.Radius = detectionRadius;
+        CollisionShape2D collisionShape = new CollisionShape2D();
+        collisionShape.Shape = circleShape;
+
+        Area2D detectionArea = new Area2D();
+        detectionArea.AddChild(collisionShape);
         detectionArea
             .Connect("body_entered", this, nameof(OnDetectionAreaEntered));
         detectionArea
             .Connect("body_exited", this, nameof(OnDetectionAreaExited));
+        AddChild(detectionArea);
     }
 
     public override void _Process(float delta)

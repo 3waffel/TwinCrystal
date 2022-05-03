@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/Textures/Samples/Icons/book_closed.svg" type="Texture" id=1]
 [ext_resource path="res://Assets/Textures/Samples/Icons/d20_outline_number.svg" type="Texture" id=2]
@@ -8,10 +8,15 @@
 [ext_resource path="res://Assets/Textures/Samples/Icons/card_add.svg" type="Texture" id=6]
 [ext_resource path="res://Assets/Textures/Samples/Icons/d3.svg" type="Texture" id=7]
 [ext_resource path="res://Scripts/Objects/UI.cs" type="Script" id=8]
+[ext_resource path="res://Assets/Fonts/DefaultFont.tres" type="DynamicFont" id=9]
+
+[sub_resource type="Theme" id=1]
+default_font = ExtResource( 9 )
 
 [node name="UI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = SubResource( 1 )
 script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -25,8 +30,11 @@ visible = false
 [node name="MenuButton" type="MenuButton" parent="CanvasLayer"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -84.0
-margin_bottom = 20.0
+margin_left = -96.0
+margin_top = 16.0
+margin_right = -12.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 9 )
 text = "MENU"
 items = [ "BUTTON 1", null, 0, false, false, 0, 0, null, "", false, "BUTTON 2", null, 0, false, false, 1, 0, null, "", false ]
 __meta__ = {
@@ -192,13 +200,10 @@ __meta__ = {
 [node name="GraphEdit" type="GraphEdit" parent="CanvasLayer/MapPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-scroll_offset = Vector2( -40, -40 )
 
 [node name="GraphNode" type="GraphNode" parent="CanvasLayer/MapPanel/GraphEdit"]
-margin_left = 40.0
-margin_top = 40.0
-margin_right = 112.0
-margin_bottom = 104.0
+margin_right = 72.0
+margin_bottom = 64.0
 mouse_filter = 1
 
 [connection signal="pressed" from="CanvasLayer/BottomPanel/Button" to="." method="OnBottomPanelButtonPressed"]

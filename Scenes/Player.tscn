@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Objects/Player.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/Samples/Icons/character.svg" type="Texture" id=2]
+[ext_resource path="res://Assets/Animations/Player/player_idle.tres" type="SpriteFrames" id=3]
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 584, 488 )
@@ -9,10 +10,17 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-jumpSpeed = 400.0
 
 [node name="Sprite" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( 12, -22.1, 12, -19, 12.8, -14, 24, -2.8, 24, 14, 23.3, 14, 18, 14.8, 19, 24, -20, 24, -20, 16.5, -19.2, 14.8, -24, 14, -24, -1, -13, -12.9, -13, -19.8, -9, -23.8, 9.1, -24 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -11.25, -7.3125 )
+scale = Vector2( 1.225, 1.1625 )
+frames = ExtResource( 3 )
+animation = "idle"
+offset = Vector2( 15, 8 )

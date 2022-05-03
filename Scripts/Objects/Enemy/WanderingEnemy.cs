@@ -21,6 +21,15 @@ public class WanderingEnemy : Enemy
         changeDirectionTimer.Start();
     }
 
+    public override void _Process(float delta)
+    {
+        base._Process(delta);
+        if (_target == null)
+        {
+            Wander(delta);
+        }
+    }
+
     public void ChangeWanderDirection()
     {
         _wanderDirection = new Vector2(
@@ -33,12 +42,6 @@ public class WanderingEnemy : Enemy
     public void Wander(float delta)
     {
         MoveAndCollide(_wanderDirection * _moveSpeed * delta);
-    }
-
-    public override void _Process(float delta)
-    {
-        base._Process(delta);
-        Wander(delta);
     }
 
     public void OnChangeDirectionTimerTimeout()
