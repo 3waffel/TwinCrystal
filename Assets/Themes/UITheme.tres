@@ -1,0 +1,31 @@
+[gd_resource type="Theme" load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Fonts/DefaultFont.tres" type="DynamicFont" id=1]
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.290196, 0.415686, 0.411765, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.501961, 0.501961, 0.501961, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.388235, 0.388235, 0.388235, 1 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.341176, 0.552941, 0.533333, 1 )
+
+[resource]
+default_font = ExtResource( 1 )
+ItemList/styles/bg = SubResource( 6 )
+MenuButton/styles/hover = SubResource( 5 )
+MenuButton/styles/normal = SubResource( 3 )
+MenuButton/styles/pressed = SubResource( 4 )
+ProgressBar/colors/font_color = Color( 0.94, 0.94, 0.94, 1 )
+ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+ProgressBar/fonts/font = null
+ProgressBar/styles/bg = SubResource( 1 )
+ProgressBar/styles/fg = SubResource( 2 )

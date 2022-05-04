@@ -22,9 +22,9 @@ public class FollowPathBehavior : Node2D
     [Export]
     private float arrivalTolerance = 10f;
     [Export]
-    private float linearAccelerationMax = 40f;
+    private float linearAccelerationMax = 4000f;
     [Export]
-    private float linearSpeedMax = 600f;
+    private float linearSpeedMax = 2000f;
 
     [Export]
     private Godot.Collections.Array<Vector2> pathPoints = new Godot.Collections.Array<Vector2>();
@@ -52,8 +52,6 @@ public class FollowPathBehavior : Node2D
         agent.Set("linear_acceleration_max", linearAccelerationMax);
         agent.Set("linear_speed_max", linearSpeedMax);
         agent.Set("linear_drag_percentage", drag);
-
-        OnPathEstablished(pathPoints);
     }
 
     public override void _PhysicsProcess(float delta)
@@ -65,7 +63,7 @@ public class FollowPathBehavior : Node2D
         }
     }
 
-    private void OnPathEstablished(Godot.Collections.Array<Vector2> points)
+    public void OnPathEstablished(Godot.Collections.Array<Vector2> points)
     {
         var positions = new Godot.Collections.Array<Vector3>();
         foreach (var point in points)

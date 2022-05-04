@@ -4,6 +4,7 @@ using Godot;
 public class SeekingEnemy : WanderingEnemy
 {
     private SeekBehavior seekBehavior;
+    public SeekBehavior SeekBehavior { get => seekBehavior; }
 
     public override void _Ready()
     {

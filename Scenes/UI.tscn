@@ -9,14 +9,12 @@
 [ext_resource path="res://Assets/Textures/Samples/Icons/d3.svg" type="Texture" id=7]
 [ext_resource path="res://Scripts/Objects/UI.cs" type="Script" id=8]
 [ext_resource path="res://Assets/Fonts/DefaultFont.tres" type="DynamicFont" id=9]
-
-[sub_resource type="Theme" id=1]
-default_font = ExtResource( 9 )
+[ext_resource path="res://Assets/Themes/UITheme.tres" type="Theme" id=10]
 
 [node name="UI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource( 1 )
+theme = ExtResource( 10 )
 script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -24,29 +22,33 @@ __meta__ = {
 
 [node name="ConversationPanel" parent="." instance=ExtResource( 3 )]
 visible = false
+theme = ExtResource( 10 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="MenuButton" type="MenuButton" parent="CanvasLayer"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -96.0
-margin_top = 16.0
-margin_right = -12.0
-margin_bottom = 36.0
+margin_left = -128.0
+margin_top = 96.0
+margin_right = -44.0
+margin_bottom = 116.0
+theme = ExtResource( 10 )
 custom_fonts/font = ExtResource( 9 )
 text = "MENU"
-items = [ "BUTTON 1", null, 0, false, false, 0, 0, null, "", false, "BUTTON 2", null, 0, false, false, 1, 0, null, "", false ]
+flat = false
+items = [ "Back to menu", null, 0, false, false, 0, 0, null, "", false, "BUTTON 2", null, 0, false, false, 1, 0, null, "", false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TopLeftPanel" type="Control" parent="CanvasLayer"]
 margin_left = 48.0
-margin_top = 40.0
+margin_top = 48.0
 margin_right = 48.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_scale = Vector2( 1.00241, 1 )
+theme = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -74,9 +76,12 @@ value = 100.0
 [node name="TopPanel" type="Control" parent="CanvasLayer"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_top = 40.0
-margin_bottom = 40.0
+margin_left = 392.0
+margin_top = 48.0
+margin_right = 392.0
+margin_bottom = 48.0
 rect_scale = Vector2( 1.00241, 1 )
+theme = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -99,9 +104,11 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -20.0
-margin_top = -40.0
-margin_right = 20.0
+margin_left = 408.0
+margin_top = -64.0
+margin_right = 448.0
+margin_bottom = -24.0
+theme = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -141,8 +148,11 @@ __meta__ = {
 [node name="BottomLeftPanel" type="Control" parent="CanvasLayer"]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -40.0
-margin_right = 40.0
+margin_left = 8.0
+margin_top = -48.0
+margin_right = 48.0
+margin_bottom = -8.0
+theme = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -174,8 +184,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MapPanel" type="Control" parent="CanvasLayer"]
-visible = false
+[node name="MapPanel" type="PopupDialog" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 24.0
@@ -200,6 +209,10 @@ __meta__ = {
 [node name="GraphEdit" type="GraphEdit" parent="CanvasLayer/MapPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -16.0
 
 [node name="GraphNode" type="GraphNode" parent="CanvasLayer/MapPanel/GraphEdit"]
 margin_right = 72.0

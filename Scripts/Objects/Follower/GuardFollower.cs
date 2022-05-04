@@ -7,7 +7,6 @@ public class GuardFollower : Follower
     private float _rotateSpeed = 30f;
 
     private Vector2 _rotateDirection = new Vector2(1f, 0f);
-
     
     private Vector2 _dashDirection = new Vector2(1f, 0f);
 
@@ -15,7 +14,7 @@ public class GuardFollower : Follower
 
     private float dashSpeed = 100000f;
 
-    private CircleShape2D _shape;
+    private CircleShape2D _shape = new CircleShape2D();
 
     [Export]
     public float ShapeRadius { get { return _shape.Radius; } set { _shape.Radius = value; } }
@@ -27,12 +26,8 @@ public class GuardFollower : Follower
     {
         base._Ready();
         CollisionShape2D collisionShape = new CollisionShape2D();
-        _shape = new CircleShape2D();
-        _shape.Radius = ShapeRadius;
         collisionShape.Shape = _shape;
         AddChild(collisionShape);
-
-
     }
 
     public override void _Process(float delta)
