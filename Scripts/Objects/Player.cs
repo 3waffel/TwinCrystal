@@ -43,6 +43,7 @@ public class Player : KinematicBody2D
 
     [Export]
     private float maxHealth = 100f;
+    public float MaxHealth { get => maxHealth; }
     private float _health = 100f;
     public float Health
     {

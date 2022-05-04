@@ -1,12 +1,14 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scenes/Bullet/DirectBullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Textures/Samples/Icons/dice_skull.svg" type="Texture" id=1]
 [ext_resource path="res://Scripts/Objects/Enemy/SeekingEnemy.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Enemy/Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Textures/Samples/Icons/tag_empty.svg" type="Texture" id=4]
 
 [node name="SeekingEnemy" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
-_bulletScene = ExtResource( 1 )
 _bulletTexture = ExtResource( 4 )
-detectionRadius = 300.0
+detectionRadius = 500.0
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 1 )

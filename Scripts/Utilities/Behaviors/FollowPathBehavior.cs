@@ -22,7 +22,7 @@ public class FollowPathBehavior : Node2D
     [Export]
     private float arrivalTolerance = 10f;
     [Export]
-    private float linearAccelerationMax = 4000f;
+    private float linearAccelerationMax = 2000f;
     [Export]
     private float linearSpeedMax = 2000f;
 

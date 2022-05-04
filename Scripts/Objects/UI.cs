@@ -10,6 +10,7 @@ public class UI : Control
     private Control bottomLeftPanel;
     private Control bottomPanel;
     private Control mapPanel;
+    private Control startMenu;
 
     public override void _Ready()
     {
@@ -19,6 +20,9 @@ public class UI : Control
         bottomLeftPanel = GetNode<Control>("CanvasLayer/BottomLeftPanel");
         bottomPanel = GetNode<Control>("CanvasLayer/BottomPanel");
         mapPanel = GetNode<Control>("CanvasLayer/MapPanel");
+        startMenu = GetNode<Control>("CanvasLayer/StartMenu");
+
+        startMenu.GetNode<Button>("Panel/Button").Connect("pressed", this, nameof(StartGame));
 
         var gameEvents = GetNode<GameEvents>("/root/GameEvents");
 
@@ -27,6 +31,13 @@ public class UI : Control
         gameEvents.Connect(nameof(GameEvents.LevelChanged), this, nameof(OnLevelChanged));
         // deal with signal in editor
     }
+
+    private void StartGame()
+    {
+        GetNode<GameEvents>("/root/GameEvents").EmitSignal(nameof(GameEvents.GameStart));
+        startMenu.Hide();
+    }
+
 
     private void OnBottomPanelButtonPressed()
     {

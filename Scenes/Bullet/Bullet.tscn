@@ -4,8 +4,9 @@
 [ext_resource path="res://Assets/Textures/Samples/Icons/tag_empty.svg" type="Texture" id=2]
 
 [node name="Bullet" type="Area2D"]
-collision_mask = 0
+collision_mask = 3
 script = ExtResource( 1 )
+damage = 30.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

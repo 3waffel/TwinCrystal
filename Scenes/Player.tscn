@@ -6,6 +6,7 @@
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 584, 488 )
+collision_mask = 2
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -16,7 +17,7 @@ visible = false
 texture = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 12, -22.1, 12, -19, 12.8, -14, 24, -2.8, 24, 14, 23.3, 14, 18, 14.8, 19, 24, -20, 24, -20, 16.5, -19.2, 14.8, -24, 14, -24, -1, -13, -12.9, -13, -19.8, -9, -23.8, 9.1, -24 )
+polygon = PoolVector2Array( 8, -24, 8, -16, 8, -16, 8, 0, 8, 8, 8, 16, 8, 16, 8, 24, -16, 24, -16, 16, -16, 16, -16, 16, -16, 0, -16, -8, -16, -16, -16, -16, -16, -24, -8, -32, 0, -32 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -11.25, -7.3125 )

@@ -12,7 +12,7 @@ public class GuardFollower : Follower
 
     private bool isDashing = false;
 
-    private float dashSpeed = 100000f;
+    private float dashSpeed = 1000f;
 
     private CircleShape2D _shape = new CircleShape2D();
 
@@ -45,7 +45,15 @@ public class GuardFollower : Follower
                 isDashing = false;
             }
             deltaSum += delta;
-            MoveAndSlide(_dashDirection * dashSpeed * delta);
+            var col = MoveAndCollide(_dashDirection * dashSpeed * delta);
+            if (col != null)
+            {
+                if (col.Collider is Enemy)
+                {
+                    ((Enemy)col.Collider).Damage(30);
+                    isDashing = false;
+                }
+            }
             return;
         }
         float rotateAngle = _rotateSpeed * delta;

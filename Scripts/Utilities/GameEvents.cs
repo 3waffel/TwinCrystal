@@ -9,6 +9,9 @@ public class GameEvents : Node
     // public delegate void GameOver();
 
     [Signal]
+    public delegate void GameStart();
+
+    [Signal]
     public delegate void BulletHitTarget(Node2D target);
 
     [Signal]

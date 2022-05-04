@@ -1,0 +1,12 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Objects/Enemy/WanderingEnemy.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/Enemy/Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Bullet/StopBullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/FollowPathBehavior.tscn" type="PackedScene" id=4]
+
+[node name="WanderingEnemy" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+_bulletScene = ExtResource( 3 )
+
+[node name="FollowPathBehavior" parent="." index="3" instance=ExtResource( 4 )]

@@ -21,7 +21,6 @@ __meta__ = {
 }
 
 [node name="ConversationPanel" parent="." instance=ExtResource( 3 )]
-visible = false
 theme = ExtResource( 10 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -74,12 +73,12 @@ margin_bottom = -2.0
 value = 100.0
 
 [node name="TopPanel" type="Control" parent="CanvasLayer"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = 392.0
-margin_top = 48.0
-margin_right = 392.0
-margin_bottom = 48.0
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -160.0
+margin_top = 56.0
+margin_right = -160.0
+margin_bottom = 56.0
 rect_scale = Vector2( 1.00241, 1 )
 theme = ExtResource( 10 )
 __meta__ = {
@@ -100,14 +99,14 @@ __meta__ = {
 }
 
 [node name="BottomPanel" type="Control" parent="CanvasLayer"]
-anchor_left = 0.5
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 408.0
-margin_top = -64.0
-margin_right = 448.0
-margin_bottom = -24.0
+margin_left = -88.0
+margin_top = -48.0
+margin_right = -48.0
+margin_bottom = -8.0
 theme = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -187,10 +186,10 @@ __meta__ = {
 [node name="MapPanel" type="PopupDialog" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 24.0
-margin_top = 24.0
-margin_right = -24.0
-margin_bottom = -24.0
+margin_left = 80.0
+margin_top = 56.0
+margin_right = -80.0
+margin_bottom = -56.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -215,8 +214,61 @@ margin_right = -16.0
 margin_bottom = -16.0
 
 [node name="GraphNode" type="GraphNode" parent="CanvasLayer/MapPanel/GraphEdit"]
-margin_right = 72.0
+margin_right = 169.0
 margin_bottom = 64.0
 mouse_filter = 1
+title = "未完成的功能 Unfinished \"Feature\""
+
+[node name="GraphNode2" type="GraphNode" parent="CanvasLayer/MapPanel/GraphEdit"]
+margin_right = 305.0
+margin_bottom = 112.0
+mouse_filter = 1
+title = "再点一次菜单关闭 Click the menu again to close the window."
+
+[node name="StartMenu" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="CanvasLayer/StartMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="CanvasLayer/StartMenu/Panel"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -144.0
+margin_top = -212.0
+margin_right = 144.0
+margin_bottom = -144.0
+theme = ExtResource( 10 )
+text = "开始游戏 Start your journey"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="CanvasLayer/StartMenu/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/StartMenu/Panel/Control"]
 
 [connection signal="pressed" from="CanvasLayer/BottomPanel/Button" to="." method="OnBottomPanelButtonPressed"]

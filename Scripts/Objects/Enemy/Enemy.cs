@@ -14,7 +14,8 @@ public class Enemy : KinematicBody2D
     protected Player _target = null;
 
     [Export]
-    protected float _health = 100f;
+    protected float maxHealth = 100f;
+    protected float _health;
 
     // TODO:
     private float deltaSum = 0f;
@@ -24,6 +25,8 @@ public class Enemy : KinematicBody2D
 
     public override void _Ready()
     {
+        _health = maxHealth;
+        ChangeHealthBar(_health, maxHealth);
         CircleShape2D circleShape = new CircleShape2D();
         circleShape.Radius = detectionRadius;
         CollisionShape2D collisionShape = new CollisionShape2D();
@@ -52,12 +55,12 @@ public class Enemy : KinematicBody2D
     {
         var bullet = (Bullet) _bulletScene.Instance();
         bullet.Position = Position;
-
-        // TODO: bullet don't need target
         bullet.Target = _target.GlobalPosition;
-
         bullet.Shooter = this;
-        bullet.BulletTexture = _bulletTexture;
+        if (_bulletTexture != null)
+        {
+            bullet.BulletTexture = _bulletTexture;
+        }
         bullet.Connect("BulletHit", this, nameof(OnBulletHit));
         GetParent().AddChild(bullet);
     }
@@ -90,9 +93,17 @@ public class Enemy : KinematicBody2D
     public void Damage(float damage)
     {
         _health -= damage;
+        ChangeHealthBar(_health, maxHealth);
         if (_health <= 0)
         {
             QueueFree();
         }
+    }
+
+    public void ChangeHealthBar(float health, float maxHealth)
+    {
+        var healthBar = GetNode<ProgressBar>("HealthBar");
+        healthBar.MaxValue = maxHealth;
+        healthBar.Value = health;
     }
 }
