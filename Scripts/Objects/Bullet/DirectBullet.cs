@@ -20,7 +20,7 @@ public class DirectBullet : Bullet
         else
         {
             MoveDirection = Target - GlobalPosition;
-            MoveDirection.Normalized();
+            MoveDirection = MoveDirection.Normalized();
         }
     }
 

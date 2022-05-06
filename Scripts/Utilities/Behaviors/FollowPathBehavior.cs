@@ -56,7 +56,7 @@ public class FollowPathBehavior : Node2D
 
     public override void _PhysicsProcess(float delta)
     {
-        if (valid)
+        if (valid && agent != null)
         {
             follow.Call("calculate_steering", accel);
             agent.Call("_apply_steering", accel, delta);

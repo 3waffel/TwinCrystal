@@ -8,8 +8,6 @@ public class PathCreator : Area2D
 
     private Godot.Collections.Array<Vector2> activePoints = new Godot.Collections.Array<Vector2>(); 
 
-    private bool isDrawing = false;
-
     private float distanceThreshold = 100f;
 
     private Timer createPathTimer = new Timer();
@@ -39,58 +37,6 @@ public class PathCreator : Area2D
                 var path = (Path2D) child;
                 curves.Add(path.Curve);
             }
-        }
-    }
-
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (@event is InputEventMouseMotion)
-        {
-            if (isDrawing)
-            {
-                activePoints.Add(((InputEventMouseMotion)@event).Position);
-                Update();
-            }
-        }
-        else if (@event is InputEventMouseButton)
-        {
-            if ((@event as InputEventMouseButton).Pressed && (@event as InputEventMouseButton).ButtonIndex == (int)ButtonList.Left)
-            {
-                activePoints.Clear();
-                activePoints.Add(((InputEventMouseButton)@event).Position);
-                isDrawing = true;
-                Update();
-            }
-            else if (!(@event as InputEventMouseButton).Pressed)
-            {
-                isDrawing = false;
-                if (activePoints.Count > 1)
-                {
-                    Simplify();
-                }
-            }
-        }
-    }
-
-    public override void _Draw()
-    {
-        if (isDrawing)
-        {
-            foreach (var point in activePoints)
-            {
-                DrawCircle(point, 2f, new Color(0, 0, 0, 0.5f));
-            }
-        }
-        else if (activePoints.Count > 0)
-        {
-            DrawCircle(activePoints[0], 2f, new Color(1, 0, 0));
-            DrawCircle(activePoints[activePoints.Count - 1], 2f, new Color(1, 0, 0));
-            Godot.Vector2[] points = new Godot.Vector2[activePoints.Count];
-            for (int i = 0; i < activePoints.Count; i++)
-            {
-                points[i] = activePoints[i];
-            }
-            DrawPolyline(points, new Color(1, 0, 0));
         }
     }
 
@@ -134,7 +80,16 @@ public class PathCreator : Area2D
 
     private void OnBodyEntered(Node2D body)
     {
-        var behavior = body.GetNodeOrNull<FollowPathBehavior>("FollowPathBehavior");
+        var children = body.GetChildren();
+        FollowPathBehavior behavior = null;
+        foreach (var child in children)
+        {
+            if (child is FollowPathBehavior)
+            {
+                behavior = child as FollowPathBehavior;
+                break;
+            }
+        }
         if (behavior != null)
         {
             Connect(nameof(PathEstablished), behavior, nameof(FollowPathBehavior.OnPathEstablished));
@@ -143,8 +98,17 @@ public class PathCreator : Area2D
     }
 
     private void OnBodyExited(Node2D body)
-    {
-        var behavior = body.GetNodeOrNull<FollowPathBehavior>("FollowPathBehavior");
+    {  
+        var children = body.GetChildren();
+        FollowPathBehavior behavior = null;
+        foreach (var child in children)
+        {
+            if (child is FollowPathBehavior)
+            {
+                behavior = child as FollowPathBehavior;
+                break;
+            }
+        }
         if (behavior != null)
         {
             Disconnect(nameof(PathEstablished), behavior, nameof(FollowPathBehavior.OnPathEstablished));

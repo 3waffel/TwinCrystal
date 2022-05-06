@@ -42,8 +42,6 @@ public class LevelSwitcher : Node2D
     public void OnLevelChanged(Interactable interactable)
     {
         Level nextLevelInstance;
-        var player = _viewport.GetNode<Player>("Player");
-        var camera = _viewport.GetNode<Camera2D>("Camera");
         if (interactable is Door)
         {
             var door = interactable as Door;
@@ -64,21 +62,18 @@ public class LevelSwitcher : Node2D
         {
             return;
         }
-        _viewport.AddChild (nextLevelInstance);
-        var toDoor = nextLevelInstance.DoorIndexMap[(interactable as Door).ToDoorIndex];
-        closestRespawnPoint = toDoor.Position;
-        player.Position = closestRespawnPoint;
-        player.Velocity = Vector2.Zero;
-        camera.Position = player.Position;
 
-        Task.Run( () => {
-            Task.Delay(1000).Wait();
-            _levelRootNode.QueueFree();
-            player.Position = toDoor.Position;
-            player.Velocity = Vector2.Zero;
-            camera.Position = player.Position;
-            _levelRootNode = nextLevelInstance;
-        });
+        CallDeferred(nameof(DeferredLevelChange), nextLevelInstance, (interactable as Door).ToDoorIndex);
+    }
+
+    private void DeferredLevelChange(Level nextLevelInstance, int toDoorIndex)
+    {
+        _viewport.AddChild (nextLevelInstance);
+        var toDoor = nextLevelInstance.DoorIndexMap[toDoorIndex];
+        closestRespawnPoint = toDoor.Position;
+        PlayerPositionReset(false);
+        _levelRootNode.QueueFree();
+        _levelRootNode = nextLevelInstance;
     }
 
     public void OnViewportResized()
@@ -99,6 +94,10 @@ public class LevelSwitcher : Node2D
 
     public void LoadStartLevel()
     {
+        if (_levelRootNode != null)
+        {
+            _levelRootNode.QueueFree();
+        }
         _viewport.GetNode<Player>("Player").Position = closestRespawnPoint;
         _viewport.GetNode<Camera2D>("Camera").Position = closestRespawnPoint;
         
@@ -110,23 +109,29 @@ public class LevelSwitcher : Node2D
     //TODO:
     public void OnPlayerDied()
     {
+        CallDeferred(nameof(DeferredLevelReset));
+    }
+
+    private void DeferredLevelReset()
+    {
+        PlayerPositionReset(true);
+        Level rebirthLevelInstance = _levelScenes[rebirthLevelIndex].Instance() as Level;
+        rebirthLevelInstance.LevelIndex = rebirthLevelIndex;
+        _levelRootNode.QueueFree();
+        _viewport.AddChild(rebirthLevelInstance);
+        _levelRootNode = rebirthLevelInstance;
+    }
+
+    private void PlayerPositionReset(bool isHealthRestored=true)
+    {
         var player = _viewport.GetNode<Player>("Player");
         var camera = _viewport.GetNode<Camera2D>("Camera");
         player.Position = closestRespawnPoint;
         player.Velocity = Vector2.Zero;
         camera.Position = player.Position;
-        player.Health = player.MaxHealth;
-        
-        Task.Run(() => {
-            Task.Delay(1000).Wait();
-            _levelRootNode.QueueFree();
-            Level rebirthLevelInstance = _levelScenes[rebirthLevelIndex].Instance() as Level;
-            rebirthLevelInstance.LevelIndex = rebirthLevelIndex;
-            _viewport.AddChild(rebirthLevelInstance);
-            _levelRootNode = rebirthLevelInstance;
-            player.Position = closestRespawnPoint;
-            player.Velocity = Vector2.Zero;
-            camera.Position = player.Position;
-        });
+        if (isHealthRestored)
+        { 
+            player.Health = player.MaxHealth;
+        }
     }
 }

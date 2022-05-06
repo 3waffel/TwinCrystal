@@ -28,15 +28,15 @@ theme = ExtResource( 10 )
 [node name="MenuButton" type="MenuButton" parent="CanvasLayer"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -128.0
-margin_top = 96.0
-margin_right = -44.0
-margin_bottom = 116.0
+margin_left = -112.0
+margin_top = 32.0
+margin_right = -28.0
+margin_bottom = 52.0
 theme = ExtResource( 10 )
 custom_fonts/font = ExtResource( 9 )
 text = "MENU"
 flat = false
-items = [ "Back to menu", null, 0, false, false, 0, 0, null, "", false, "BUTTON 2", null, 0, false, false, 1, 0, null, "", false ]
+items = [ "Back to menu", null, 0, false, false, 0, 0, null, "", false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -60,7 +60,7 @@ margin_left = 31.9231
 margin_top = 8.0
 margin_right = 134.923
 margin_bottom = 22.0
-text = "TOP LEFT PANEL"
+text = "HEALTH BAR"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -73,6 +73,7 @@ margin_bottom = -2.0
 value = 100.0
 
 [node name="TopPanel" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -160.0
@@ -93,7 +94,6 @@ margin_left = 31.9229
 margin_top = -10.0
 margin_right = 102.923
 margin_bottom = 4.0
-text = "TOP PANEL"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -138,7 +138,7 @@ anchor_bottom = 1.0
 margin_left = -51.0
 margin_top = -16.0
 margin_right = 51.0
-text = "MENU"
+text = "MAP MENU"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false

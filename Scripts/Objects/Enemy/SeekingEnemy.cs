@@ -16,8 +16,9 @@ public class SeekingEnemy : WanderingEnemy
     public override void _Process(float delta)
     {
         base._Process(delta);
-        try {
-            if (_target != null)
+        if (seekBehavior != null)
+        {
+            if (_target != null )
             {
                 seekBehavior.PlayerAgent = _target.PlayerAgent.agent;
             }
@@ -25,10 +26,6 @@ public class SeekingEnemy : WanderingEnemy
             {
                 seekBehavior.PlayerAgent = null;
             }
-        }
-        catch
-        {
-            return;
         }
     }
 }

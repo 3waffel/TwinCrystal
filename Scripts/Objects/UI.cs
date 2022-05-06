@@ -4,7 +4,7 @@ using System;
 public class UI : Control
 {
 
-    private Control menuButton;
+    private MenuButton menuButton;
     private Control topLeftPanel;
     private Control topPanel;
     private Control bottomLeftPanel;
@@ -23,9 +23,9 @@ public class UI : Control
         startMenu = GetNode<Control>("CanvasLayer/StartMenu");
 
         startMenu.GetNode<Button>("Panel/Button").Connect("pressed", this, nameof(StartGame));
+        menuButton.GetPopup().Connect("index_pressed", this, nameof(OnMenuButtonPressed));
 
         var gameEvents = GetNode<GameEvents>("/root/GameEvents");
-
         gameEvents.Connect(nameof(GameEvents.PlayerHealthChanged), this, nameof(OnPlayerHealthChanged));
         gameEvents.Connect(nameof(GameEvents.EnterCheckPoint), this, nameof(OnEnterCheckPoint));
         gameEvents.Connect(nameof(GameEvents.LevelChanged), this, nameof(OnLevelChanged));
@@ -38,6 +38,13 @@ public class UI : Control
         startMenu.Visible = false;
     }
 
+    private void OnMenuButtonPressed(int index)
+    {
+        if (index == 0)
+        {
+            startMenu.Visible = true;
+        }
+    }
 
     private void OnBottomPanelButtonPressed()
     {

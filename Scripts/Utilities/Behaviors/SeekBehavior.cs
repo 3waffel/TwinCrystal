@@ -45,7 +45,7 @@ public class SeekBehavior : Node2D
 
     public override void _PhysicsProcess(float delta)
     {
-        if (playerAgent == null)
+        if (playerAgent == null || agent == null)
         {
             return;
         }
