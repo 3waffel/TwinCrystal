@@ -18,7 +18,7 @@ public class LevelSwitcher : Node2D
     public int ScenesCount { get => _levelScenes.Count; }
 
     //TODO: quick cheat on player death
-    Door closestDoor = new Door();
+    Vector2 closestRespawnPoint = new Vector2();
     int rebirthLevelIndex = 0;
 
     public override void _Ready()
@@ -32,10 +32,9 @@ public class LevelSwitcher : Node2D
         gameEvents.Connect("LevelChanged", this, nameof(OnLevelChanged));
         //TODO:
         gameEvents.Connect(nameof(GameEvents.PlayerDied), this, nameof(OnPlayerDied));
-        AddChild(closestDoor);
 
         gameEvents.Connect(nameof(GameEvents.GameStart), this, nameof(LoadStartLevel));
-        closestDoor.Position = _viewport.GetNode<Player>("Player").Position;
+        closestRespawnPoint = _viewport.GetNode<Player>("Player").Position;
 
         // LoadStartLevel();
     }
@@ -54,32 +53,32 @@ public class LevelSwitcher : Node2D
                 nextLevelInstance = _levelScenes[door.ToLevelIndex].Instance() as Level;
                 // _levelList[door.ToLevelIndex] = nextLevelInstance;
                 nextLevelInstance.LevelIndex = door.ToLevelIndex;
-                GD.Print("New Level: " + nextLevelInstance.LevelName);
             }
             else
             {
                 nextLevelInstance = _levelList[door.ToLevelIndex];
-                GD.Print("Existing Level: " + nextLevelInstance.LevelName);
             }
             rebirthLevelIndex = door.ToLevelIndex;
         }
         else
         {
-            GD.Print("LevelSwitcher: OnLevelChanged: Unknown interactable type");
             return;
         }
-        _viewport.RemoveChild (_levelRootNode);
         _viewport.AddChild (nextLevelInstance);
-        _levelRootNode.QueueFree();
-        _levelRootNode = nextLevelInstance;
-
         var toDoor = nextLevelInstance.DoorIndexMap[(interactable as Door).ToDoorIndex];
-        closestDoor = toDoor;
-        player.Position = toDoor.Position;
+        closestRespawnPoint = toDoor.Position;
+        player.Position = closestRespawnPoint;
         player.Velocity = Vector2.Zero;
         camera.Position = player.Position;
 
-        GD.Print(_levelList.Count);
+        Task.Run( () => {
+            Task.Delay(1000).Wait();
+            _levelRootNode.QueueFree();
+            player.Position = toDoor.Position;
+            player.Velocity = Vector2.Zero;
+            camera.Position = player.Position;
+            _levelRootNode = nextLevelInstance;
+        });
     }
 
     public void OnViewportResized()
@@ -100,8 +99,8 @@ public class LevelSwitcher : Node2D
 
     public void LoadStartLevel()
     {
-        _viewport.GetNode<Player>("Player").Position = closestDoor.Position;
-        _viewport.GetNode<Camera2D>("Camera").Position = closestDoor.Position;
+        _viewport.GetNode<Player>("Player").Position = closestRespawnPoint;
+        _viewport.GetNode<Camera2D>("Camera").Position = closestRespawnPoint;
         
         _levelRootNode = _levelScenes[0].Instance() as Level;
         _levelList[0] = _levelRootNode;
@@ -109,22 +108,25 @@ public class LevelSwitcher : Node2D
     }
 
     //TODO:
-    public async void OnPlayerDied()
+    public void OnPlayerDied()
     {
         var player = _viewport.GetNode<Player>("Player");
-        player.Position = closestDoor.Position;
-        player.Velocity = Vector2.Zero;
-        player.Health = player.MaxHealth;
         var camera = _viewport.GetNode<Camera2D>("Camera");
+        player.Position = closestRespawnPoint;
+        player.Velocity = Vector2.Zero;
         camera.Position = player.Position;
+        player.Health = player.MaxHealth;
         
-        await Task.Delay(10);
-
-        _levelRootNode.QueueFree();
-        Level rebirthLevelInstance = _levelScenes[rebirthLevelIndex].Instance() as Level;
-        rebirthLevelInstance.LevelIndex = rebirthLevelIndex;
-        _viewport.AddChild(rebirthLevelInstance);
-        _viewport.RemoveChild(_levelRootNode);
-        _levelRootNode = rebirthLevelInstance;
+        Task.Run(() => {
+            Task.Delay(1000).Wait();
+            _levelRootNode.QueueFree();
+            Level rebirthLevelInstance = _levelScenes[rebirthLevelIndex].Instance() as Level;
+            rebirthLevelInstance.LevelIndex = rebirthLevelIndex;
+            _viewport.AddChild(rebirthLevelInstance);
+            _levelRootNode = rebirthLevelInstance;
+            player.Position = closestRespawnPoint;
+            player.Velocity = Vector2.Zero;
+            camera.Position = player.Position;
+        });
     }
 }

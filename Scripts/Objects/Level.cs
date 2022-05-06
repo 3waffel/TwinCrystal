@@ -22,7 +22,6 @@ public class Level : Node2D
                 _doorIndexMap.Add(door.DoorIndex, door);
             }
         }
-        GD.Print(LevelName + " Doors: " + _doorIndexMap.Count);
     }
 
     // public void ChangeLevel(String NextLevelName)

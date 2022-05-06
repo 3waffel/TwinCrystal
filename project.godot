@@ -188,7 +188,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="BOOOM2022"
+config/name="Booom2022"
 config/description="Project for Booom2022 game jam."
 run/main_scene="res://Scenes/Main.tscn"
 config/icon="res://icon.png"

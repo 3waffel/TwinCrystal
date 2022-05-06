@@ -82,7 +82,6 @@ public class TileMapGeneration : Node
             {
                 row += map[x, y] ? "." : "#";
             }
-            GD.Print (row);
         }
     }
 
@@ -114,7 +113,6 @@ public class TileMapGeneration : Node
             _preloadTask
                 .ContinueWith(task =>
                 {
-                    GD.Print(task.Result);
                     _preloadTileMap.Position = task.Result;
                     GetParent().AddChild(_preloadTileMap);
                 },

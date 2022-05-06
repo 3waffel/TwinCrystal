@@ -92,7 +92,6 @@ public class PathCreator : Area2D
             }
             DrawPolyline(points, new Color(1, 0, 0));
         }
-        GD.Print(activePoints.Count);
     }
 
     private void Simplify()
@@ -138,7 +137,6 @@ public class PathCreator : Area2D
         var behavior = body.GetNodeOrNull<FollowPathBehavior>("FollowPathBehavior");
         if (behavior != null)
         {
-            GD.Print("Behavior found");
             Connect(nameof(PathEstablished), behavior, nameof(FollowPathBehavior.OnPathEstablished));
             canCreatePath = true;
         }
@@ -149,7 +147,6 @@ public class PathCreator : Area2D
         var behavior = body.GetNodeOrNull<FollowPathBehavior>("FollowPathBehavior");
         if (behavior != null)
         {
-            GD.Print("Behavior removed");
             Disconnect(nameof(PathEstablished), behavior, nameof(FollowPathBehavior.OnPathEstablished));
             canCreatePath = false;
         }

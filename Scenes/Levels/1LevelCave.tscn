@@ -87,7 +87,7 @@ position = Vector2( 4624, 160 )
 
 [node name="Conversable" parent="." instance=ExtResource( 8 )]
 position = Vector2( 832, 512 )
-_conversation = [ "W与AD键 进行跳跃和左右的移动；A and D to move left and right, press W to jump", "按住方向键时按Shift键进行某个方向的冲刺；Hold key for a direction and press Shift to dash", "R键使用随从的能力；Press R to use skill of your follower.", "F键与可交互物体交互；Press F to interact with interactable object." ]
+_conversation = [ "W与AD键 进行跳跃和左右的移动；A and D to move left and right, press W to jump", "按住方向键时按Shift键进行某个方向的冲刺；Hold key for a direction and press Shift to dash", "Space键使用随从的能力；Press Space to use skill of your follower.", "F键与可交互物体交互；Press F to interact with interactable object." ]
 _portrait = ExtResource( 12 )
 
 [node name="Label" type="Label" parent="Conversable"]

@@ -152,21 +152,18 @@ public class Player : KinematicBody2D
         {
             return;
         }
-        GD.Print("Player damaged");
         Health -= damage;
         isInvincible = true;
         invinciblityTimer.Start(invinciblityTime);
         
         if (Health <= 0f)
         {
-            GD.Print("Player died");
             GetNode<GameEvents>("/root/GameEvents").EmitSignal(nameof(GameEvents.PlayerDied));
         }
     }
 
     private void OnEnterCheckPoint(CheckPoint checkPoint)
     {
-        GD.Print("Player entered check point");
         Health = maxHealth;
     }
 }

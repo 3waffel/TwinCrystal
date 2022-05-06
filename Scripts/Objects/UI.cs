@@ -14,7 +14,7 @@ public class UI : Control
 
     public override void _Ready()
     {
-        menuButton = GetNode<Control>("CanvasLayer/MenuButton");
+        menuButton = GetNode<MenuButton>("CanvasLayer/MenuButton");
         topLeftPanel = GetNode<Control>("CanvasLayer/TopLeftPanel");
         topPanel = GetNode<Control>("CanvasLayer/TopPanel");
         bottomLeftPanel = GetNode<Control>("CanvasLayer/BottomLeftPanel");
@@ -35,7 +35,7 @@ public class UI : Control
     private void StartGame()
     {
         GetNode<GameEvents>("/root/GameEvents").EmitSignal(nameof(GameEvents.GameStart));
-        startMenu.Hide();
+        startMenu.Visible = false;
     }
 
 

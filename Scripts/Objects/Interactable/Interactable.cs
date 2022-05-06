@@ -15,7 +15,6 @@ public class Interactable : Area2D
     {
         if (node is Player)
         {
-            GD.Print("Interactable: OnBodyEntered");
             _inArea = true;
         }
     }
@@ -24,7 +23,6 @@ public class Interactable : Area2D
     {
         if (node is Player)
         {
-            GD.Print("Interactable: OnBodyExited");
             _inArea = false;
         }
     }

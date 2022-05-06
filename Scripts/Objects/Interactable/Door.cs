@@ -52,8 +52,6 @@ public class Door : Interactable
         {
             if (Input.IsActionJustPressed("interact"))
             {
-                GD.Print("Door: _Process");
-
                 GetNode<GameEvents>("/root/GameEvents").EmitSignal("LevelChanged", this);
 
                 // TODO: animation

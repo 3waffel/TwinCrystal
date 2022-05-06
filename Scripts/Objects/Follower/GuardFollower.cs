@@ -71,7 +71,6 @@ public class GuardFollower : Follower
     {
         Vector2 mousePosition = GetGlobalMousePosition();
         Vector2 direction = mousePosition - Position;
-        GD.Print(direction);
         _dashDirection = direction.Normalized();
 
     }
