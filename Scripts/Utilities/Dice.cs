@@ -3,7 +3,6 @@ using System;
 
 public class Dice : Node
 {
-    [Export]
     public static int sides = 20;
 
     public override void _Ready()

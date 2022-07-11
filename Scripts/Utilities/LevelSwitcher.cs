@@ -28,6 +28,7 @@ public class LevelSwitcher : Node2D
         _levelList.Resize(ScenesCount);
 
         GetViewport().Connect("size_changed", this, nameof(OnViewportResized));
+        _viewportContainer.SetSize(GetViewport().Size);
         var gameEvents = GetNode<GameEvents>("/root/GameEvents");
         gameEvents.Connect("LevelChanged", this, nameof(OnLevelChanged));
         //TODO:

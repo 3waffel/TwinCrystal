@@ -61,6 +61,9 @@ public class Player : KinematicBody2D
         get => playerAgent;
     }
 
+    private AnimatedSprite playerSprite;
+    private bool isFacingRight = true;
+
     public override void _Ready()
     {
         dashReadyTimer = new Timer();
@@ -78,6 +81,8 @@ public class Player : KinematicBody2D
 
         playerAgent = new Agent();
         AddChild(playerAgent);
+
+        playerSprite = GetNode<AnimatedSprite>("AnimatedSprite");
     }
 
     public override void _Process(float delta)
@@ -135,6 +140,29 @@ public class Player : KinematicBody2D
         else if (isIdling || isRunning)
         {
             jumpsMade = 0;
+        }
+
+        
+        if (horizontalDirection != 0f)
+        {
+            isFacingRight = horizontalDirection > 0f;
+        }
+        playerSprite.FlipH = !isFacingRight;
+        if (isIdling)
+        {
+            playerSprite.Play("idle");
+        }
+        else if (isJumping)
+        {
+            playerSprite.Play("jump");
+        }
+        else if (isFalling)
+        {
+            playerSprite.Play("fall");
+        }
+        else if (isRunning)
+        {
+            playerSprite.Play("run");
         }
     
         _velocity = MoveAndSlide(_velocity, Vector2.Up);

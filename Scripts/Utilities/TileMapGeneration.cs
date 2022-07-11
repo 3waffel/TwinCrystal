@@ -16,7 +16,7 @@ public class TileMapGeneration : Node
 
     private Task<Vector2> _preloadTask;
 
-    private CancellationTokenSource _preloadCancellationTokenSource;
+    private CancellationTokenSource _preloadCancellationTokenSource = new CancellationTokenSource();
 
     public static Godot.Collections.Array BasicGen(int height, int width)
     {
@@ -87,7 +87,6 @@ public class TileMapGeneration : Node
 
     public override void _Ready()
     {
-        _preloadCancellationTokenSource = new CancellationTokenSource();
         CancellationToken cancellationToken =
             _preloadCancellationTokenSource.Token;
 
@@ -119,9 +118,17 @@ public class TileMapGeneration : Node
                 TaskContinuationOptions.OnlyOnRanToCompletion)
                 .ContinueWith(task =>
                 {
-                    QueueFree();
                     _preloadCancellationTokenSource.Dispose();  
+                    QueueFree();
                 });
+        }
+    }
+
+    public override void _Process(float delta)
+    {
+        if (!IsInsideTree())
+        {
+            _preloadCancellationTokenSource.Cancel();
         }
     }
 }

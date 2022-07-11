@@ -68,7 +68,7 @@ _toLevelIndex = 4
 [node name="PathCreator" parent="." instance=ExtResource( 5 )]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PathCreator"]
-polygon = PoolVector2Array( 4608, 4688, 4296, 5272, 4592, 5736, 4928, 6192, 4920, 6344, 6312, 6464, 6552, 5856, 6032, 4768 )
+polygon = PoolVector2Array( 4652, 4726, 4312, 4809, 4433, 5280, 4827, 5181, 6131, 5915, 6586, 5734, 6400, 5282, 5922, 5437 )
 
 [node name="Path2D" type="Path2D" parent="PathCreator"]
 visible = false
@@ -81,7 +81,7 @@ curve = SubResource( 2 )
 [node name="PathCreator2" parent="." instance=ExtResource( 5 )]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PathCreator2"]
-polygon = PoolVector2Array( 4256, 2552, 4728, 3288, 6744, 3728, 6928, 4712, 8120, 4680, 7888, 3008, 7400, 2656, 5496, 2640 )
+polygon = PoolVector2Array( 4247, 2555, 4489, 2966, 6961, 4286, 6991, 4642, 7645, 4622, 7605, 4232, 4849, 2723, 4584, 2367 )
 
 [node name="Path2D" type="Path2D" parent="PathCreator2"]
 visible = false
@@ -94,7 +94,7 @@ curve = SubResource( 4 )
 [node name="PathCreator3" parent="." instance=ExtResource( 5 )]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PathCreator3"]
-polygon = PoolVector2Array( 3048, -600, 3360, -80, 4040, 0, 4584, -8, 5064, -208, 5528, -360, 4896, -352, 4232, -296, 3664, -248, 3224, -616 )
+polygon = PoolVector2Array( 3313, -186, 3427, -63, 4584, -8, 5064, -208, 5024, -372, 3578, -179, 3478, -305 )
 
 [node name="Path2D" type="Path2D" parent="PathCreator3"]
 visible = false
@@ -237,7 +237,7 @@ position = Vector2( 4512, -192 )
 position = Vector2( 3856, -152 )
 
 [node name="WanderingEnemy7" parent="." instance=ExtResource( 6 )]
-position = Vector2( 3232, -512 )
+position = Vector2( 3454, -186 )
 
 [node name="WanderingEnemy8" parent="." instance=ExtResource( 6 )]
 position = Vector2( 6112, 3096 )
@@ -246,10 +246,10 @@ position = Vector2( 6112, 3096 )
 position = Vector2( 4848, 3096 )
 
 [node name="WanderingEnemy10" parent="." instance=ExtResource( 6 )]
-position = Vector2( 5128, 2760 )
+position = Vector2( 5374, 3126 )
 
 [node name="WanderingEnemy11" parent="." instance=ExtResource( 6 )]
 position = Vector2( 6088, 3400 )
 
 [node name="WanderingEnemy12" parent="." instance=ExtResource( 6 )]
-position = Vector2( 7504, 3064 )
+position = Vector2( 7270, 4312 )
